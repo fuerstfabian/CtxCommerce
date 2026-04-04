@@ -55,15 +55,15 @@ async def search_products(query: str) -> List[Dict[str, Any]]:
         query_vector_list = query_vector.tolist() if hasattr(query_vector, 'tolist') else list(query_vector)
 
         # 2. Query Qdrant
-        search_result = await qdrant_client.search(
+        search_result = await qdrant_client.query_points(
             collection_name=COLLECTION_NAME,
-            query_vector=query_vector_list,
+            query=query_vector_list,
             limit=3
         )
         
         # 3. Extract the payload dictionaries
         results: List[Dict[str, Any]] = []
-        for scored_point in search_result:
+        for scored_point in search_result.points:
             if scored_point.payload:
                 results.append(scored_point.payload)
                 
