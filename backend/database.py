@@ -1,46 +1,75 @@
 """
 Database interaction module for CtxCommerce.
-Handles connections and queries to the Qdrant Vector Database.
+Handles connections and queries to the local Qdrant Vector Database
+using FastEmbed for on-the-fly query vectorization.
 """
 import logging
 from typing import List, Dict, Any
 
+from qdrant_client import AsyncQdrantClient
+from fastembed import TextEmbedding
+
 logger = logging.getLogger(__name__)
+
+QDRANT_URL = "http://localhost:6333"
+COLLECTION_NAME = "products"
+EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
+
+# Initialize singletons for the Qdrant Client and Embedding Model
+# Initialized globally so they are reused across requests, minimizing latency.
+try:
+    qdrant_client = AsyncQdrantClient(url=QDRANT_URL)
+    embedding_model = TextEmbedding(model_name=EMBEDDING_MODEL)
+except Exception as e:
+    logger.error(f"Critical error initializing Database services: {e}")
+    # Proceed without crashing entirely to allow the app to boot, 
+    # but subsequent calls to search_products will fail gracefully.
+    qdrant_client = None
+    embedding_model = None
+
 
 async def search_products(query: str) -> List[Dict[str, Any]]:
     """
     Performs a hybrid search for products based on the query string.
-    
-    Currently, this is a stub/placeholder that returns static dummy data.
-    Will be implemented with real Qdrant hybrid search in the future.
+    Embeds the incoming text query and queries the Qdrant database.
     
     Args:
         query (str): The search term provided by the agent.
         
     Returns:
-        List[Dict[str, Any]]: A list of product dictionaries matching the query.
+        List[Dict[str, Any]]: A list of product dictionaries matching the query (payloads).
     """
-    logger.info(f"Executing expected hybrid search for query: '{query}'")
+    logger.info(f"Executing vector search for query: '{query}'")
     
-    # Return placeholder data for now
-    dummy_products = [
-        {
-            "id": "P123", 
-            "name": "Premium Wireless Headphones", 
-            "description": "High-quality noise-canceling headphones.", 
-            "price": 299.99
-        },
-        {
-            "id": "P456", 
-            "name": "Ergonomic Office Chair", 
-            "description": "Comfortable chair with lumbar support.", 
-            "price": 199.50
-        },
-        {
-            "id": "P789", 
-            "name": "Mechanical Keyboard", 
-            "description": "RGB mechanical keyboard with tactile switches.", 
-            "price": 129.00
-        }
-    ]
-    return dummy_products
+    if not qdrant_client or not embedding_model:
+        logger.error("Database or Embedding Model is not initialized.")
+        return [{"error": "Search is currently unavailable."}]
+        
+    try:
+        # 1. Embed the search query
+        # FastEmbed's embed returns a generator, we take the first (and only) vector
+        generator = embedding_model.embed([query])
+        query_vector = list(generator)[0]
+        
+        # Convert vector to standard Python list for Qdrant
+        query_vector_list = query_vector.tolist() if hasattr(query_vector, 'tolist') else list(query_vector)
+
+        # 2. Query Qdrant
+        search_result = await qdrant_client.search(
+            collection_name=COLLECTION_NAME,
+            query_vector=query_vector_list,
+            limit=3
+        )
+        
+        # 3. Extract the payload dictionaries
+        results: List[Dict[str, Any]] = []
+        for scored_point in search_result:
+            if scored_point.payload:
+                results.append(scored_point.payload)
+                
+        logger.info(f"Search returned {len(results)} relevant products.")
+        return results
+
+    except Exception as e:
+        logger.error(f"Error during Qdrant search execution: {e}")
+        return [{"error": "Failed to fetch products from the database."}]

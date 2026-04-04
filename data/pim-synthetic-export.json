@@ -1,0 +1,548 @@
+[
+  {
+    "uuid": "UL-TENT-001",
+    "identifier": "nemo-hornet-osmo-2",
+    "enabled": true,
+    "family": "tents",
+    "categories": [
+      "ultralight",
+      "shelter",
+      "summer_collection"
+    ],
+    "groups": [],
+    "values": {
+      "name": [
+        {
+          "data": "Nemo Hornet Osmo 2P",
+          "locale": "en_US",
+          "scope": null,
+          "attribute_type": "pim_catalog_text"
+        },
+        {
+          "data": "Nemo Hornet Osmo 2 Places",
+          "locale": "fr_FR",
+          "scope": null,
+          "attribute_type": "pim_catalog_text"
+        }
+      ],
+      "description": [
+        {
+          "data": "Ultra-lightweight freestanding backpacking tent. Features the new OSMO poly-nylon ripstop fabric that reduces stretch when wet. Minimum weight is only 948g. Perfect for thru-hiking.",
+          "locale": "en_US",
+          "scope": "ecommerce",
+          "attribute_type": "pim_catalog_textarea"
+        }
+      ],
+      "price": [
+        {
+          "data": [
+            {
+              "amount": "429.95",
+              "currency": "EUR"
+            },
+            {
+              "amount": "430.00",
+              "currency": "USD"
+            }
+          ],
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_price_collection"
+        }
+      ],
+      "weight_grams": [
+        {
+          "data": 948,
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_metric"
+        }
+      ],
+      "capacity": [
+        {
+          "data": "2_person",
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_simpleselect"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "UL-PACK-001",
+    "identifier": "hyperlite-southwest-3400",
+    "enabled": true,
+    "family": "backpacks",
+    "categories": [
+      "ultralight",
+      "packs",
+      "thru_hiking"
+    ],
+    "groups": [],
+    "values": {
+      "name": [
+        {
+          "data": "Hyperlite Mountain Gear Southwest 3400",
+          "locale": "en_US",
+          "scope": null,
+          "attribute_type": "pim_catalog_text"
+        }
+      ],
+      "description": [
+        {
+          "data": "A 55-liter ultralight backpack made from 100% waterproof Dyneema Composite Fabric (DCF). Ideal for environments where tough, waterproof gear is necessary. Weighs just 898g.",
+          "locale": "en_US",
+          "scope": "ecommerce",
+          "attribute_type": "pim_catalog_textarea"
+        }
+      ],
+      "price": [
+        {
+          "data": [
+            {
+              "amount": "379.00",
+              "currency": "EUR"
+            }
+          ],
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_price_collection"
+        }
+      ],
+      "weight_grams": [
+        {
+          "data": 898,
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_metric"
+        }
+      ],
+      "color": [
+        {
+          "data": "white",
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_simpleselect"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "UL-SLEEP-001",
+    "identifier": "thermarest-neoair-xLite-nxt",
+    "enabled": true,
+    "family": "sleeping_pads",
+    "categories": [
+      "ultralight",
+      "sleep_system"
+    ],
+    "groups": [],
+    "values": {
+      "name": [
+        {
+          "data": "Therm-a-Rest NeoAir XLite NXT",
+          "locale": "en_US",
+          "scope": null,
+          "attribute_type": "pim_catalog_text"
+        }
+      ],
+      "description": [
+        {
+          "data": "The gold standard in ultralight backpacking sleeping pads. The NXT version is significantly quieter and thicker (3 inches) with an R-Value of 4.5. Weighs only 354g in regular size.",
+          "locale": "en_US",
+          "scope": "ecommerce",
+          "attribute_type": "pim_catalog_textarea"
+        }
+      ],
+      "price": [
+        {
+          "data": [
+            {
+              "amount": "209.95",
+              "currency": "EUR"
+            }
+          ],
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_price_collection"
+        }
+      ],
+      "weight_grams": [
+        {
+          "data": 354,
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_metric"
+        }
+      ],
+      "r_value": [
+        {
+          "data": 4.5,
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_metric"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "UL-QUILT-001",
+    "identifier": "enlightened-equipment-revelation-20",
+    "enabled": true,
+    "family": "sleeping_bags",
+    "categories": [
+      "ultralight",
+      "sleep_system",
+      "quilts"
+    ],
+    "groups": [],
+    "values": {
+      "name": [
+        {
+          "data": "Enlightened Equipment Revelation 20°F Quilt",
+          "locale": "en_US",
+          "scope": null,
+          "attribute_type": "pim_catalog_text"
+        }
+      ],
+      "description": [
+        {
+          "data": "Highly versatile ultralight sleeping quilt. Features 850 fill power down and a zippered footbox that allows it to lay flat like a blanket on warm nights. Comfort rated to -6°C. Weighs 665g.",
+          "locale": "en_US",
+          "scope": "ecommerce",
+          "attribute_type": "pim_catalog_textarea"
+        }
+      ],
+      "price": [
+        {
+          "data": [
+            {
+              "amount": "315.00",
+              "currency": "EUR"
+            }
+          ],
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_price_collection"
+        }
+      ],
+      "weight_grams": [
+        {
+          "data": 665,
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_metric"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "UL-STOVE-001",
+    "identifier": "msr-pocketrocket-2",
+    "enabled": true,
+    "family": "stoves",
+    "categories": [
+      "ultralight",
+      "cooking"
+    ],
+    "groups": [],
+    "values": {
+      "name": [
+        {
+          "data": "MSR PocketRocket 2 Mini Stove",
+          "locale": "en_US",
+          "scope": null,
+          "attribute_type": "pim_catalog_text"
+        }
+      ],
+      "description": [
+        {
+          "data": "Next-generation ultralight backpacking stove. Boils 1 liter of water in 3.5 minutes. Barely noticeable in your pack at just 73 grams. Folds down exceptionally small.",
+          "locale": "en_US",
+          "scope": "ecommerce",
+          "attribute_type": "pim_catalog_textarea"
+        }
+      ],
+      "price": [
+        {
+          "data": [
+            {
+              "amount": "49.95",
+              "currency": "EUR"
+            }
+          ],
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_price_collection"
+        }
+      ],
+      "weight_grams": [
+        {
+          "data": 73,
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_metric"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "UL-FILTER-001",
+    "identifier": "sawyer-squeeze",
+    "enabled": true,
+    "family": "water_filters",
+    "categories": [
+      "ultralight",
+      "hydration"
+    ],
+    "groups": [],
+    "values": {
+      "name": [
+        {
+          "data": "Sawyer Squeeze Water Filter",
+          "locale": "en_US",
+          "scope": null,
+          "attribute_type": "pim_catalog_text"
+        }
+      ],
+      "description": [
+        {
+          "data": "The most popular water filter for thru-hikers. Hollow fiber membrane filters out 99.99999% of all bacteria and protozoa. Screws onto standard water bottles. Weighs 85g.",
+          "locale": "en_US",
+          "scope": "ecommerce",
+          "attribute_type": "pim_catalog_textarea"
+        }
+      ],
+      "price": [
+        {
+          "data": [
+            {
+              "amount": "39.95",
+              "currency": "EUR"
+            }
+          ],
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_price_collection"
+        }
+      ],
+      "weight_grams": [
+        {
+          "data": 85,
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_metric"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "UL-CLOTHING-001",
+    "identifier": "patagonia-houdini-jacket",
+    "enabled": true,
+    "family": "jackets",
+    "categories": [
+      "ultralight",
+      "clothing",
+      "wind_layers"
+    ],
+    "groups": [],
+    "values": {
+      "name": [
+        {
+          "data": "Patagonia Houdini Wind Jacket",
+          "locale": "en_US",
+          "scope": null,
+          "attribute_type": "pim_catalog_text"
+        }
+      ],
+      "description": [
+        {
+          "data": "The ultimate emergency layer. 100% recycled nylon ripstop windbreaker with a DWR finish. Packs down to the size of an apple into its own chest pocket. Weighs 105g.",
+          "locale": "en_US",
+          "scope": "ecommerce",
+          "attribute_type": "pim_catalog_textarea"
+        }
+      ],
+      "price": [
+        {
+          "data": [
+            {
+              "amount": "109.00",
+              "currency": "EUR"
+            }
+          ],
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_price_collection"
+        }
+      ],
+      "weight_grams": [
+        {
+          "data": 105,
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_metric"
+        }
+      ],
+      "color": [
+        {
+          "data": "smolder_blue",
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_simpleselect"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "UL-HEADLAMP-001",
+    "identifier": "nitecore-nu25-ul",
+    "enabled": true,
+    "family": "electronics",
+    "categories": [
+      "ultralight",
+      "lighting"
+    ],
+    "groups": [],
+    "values": {
+      "name": [
+        {
+          "data": "Nitecore NU25 UL Headlamp",
+          "locale": "en_US",
+          "scope": null,
+          "attribute_type": "pim_catalog_text"
+        }
+      ],
+      "description": [
+        {
+          "data": "Purpose-built for ultralight hikers. USB-C rechargeable, 400 lumens max output, with both dual-beam spotlight and floodlight. Features an ultra-light shock cord headband. Total weight 45g.",
+          "locale": "en_US",
+          "scope": "ecommerce",
+          "attribute_type": "pim_catalog_textarea"
+        }
+      ],
+      "price": [
+        {
+          "data": [
+            {
+              "amount": "36.95",
+              "currency": "EUR"
+            }
+          ],
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_price_collection"
+        }
+      ],
+      "weight_grams": [
+        {
+          "data": 45,
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_metric"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "UL-TREK-001",
+    "identifier": "black-diamond-distance-carbon-z",
+    "enabled": true,
+    "family": "trekking_poles",
+    "categories": [
+      "ultralight",
+      "accessories"
+    ],
+    "groups": [],
+    "values": {
+      "name": [
+        {
+          "data": "Black Diamond Distance Carbon Z Trekking Poles",
+          "locale": "en_US",
+          "scope": null,
+          "attribute_type": "pim_catalog_text"
+        }
+      ],
+      "description": [
+        {
+          "data": "100% carbon fiber construction makes these the lightest folding poles on the market. Z-Pole folding design allows for rapid deployment and compact storage. Weight per pair is 273g.",
+          "locale": "en_US",
+          "scope": "ecommerce",
+          "attribute_type": "pim_catalog_textarea"
+        }
+      ],
+      "price": [
+        {
+          "data": [
+            {
+              "amount": "169.95",
+              "currency": "EUR"
+            }
+          ],
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_price_collection"
+        }
+      ],
+      "weight_grams": [
+        {
+          "data": 273,
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_metric"
+        }
+      ]
+    }
+  },
+  {
+    "uuid": "UL-POT-001",
+    "identifier": "toaks-titanium-750ml",
+    "enabled": true,
+    "family": "cookware",
+    "categories": [
+      "ultralight",
+      "cooking"
+    ],
+    "groups": [],
+    "values": {
+      "name": [
+        {
+          "data": "Toaks Titanium 750ml Pot",
+          "locale": "en_US",
+          "scope": null,
+          "attribute_type": "pim_catalog_text"
+        }
+      ],
+      "description": [
+        {
+          "data": "Minimalist titanium cooking pot. Large enough to boil water for a dehydrated meal and a coffee. Fits a 100g fuel canister and small stove inside. Comes with a lid and bail handle. Weighs 103g.",
+          "locale": "en_US",
+          "scope": "ecommerce",
+          "attribute_type": "pim_catalog_textarea"
+        }
+      ],
+      "price": [
+        {
+          "data": [
+            {
+              "amount": "34.95",
+              "currency": "EUR"
+            }
+          ],
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_price_collection"
+        }
+      ],
+      "weight_grams": [
+        {
+          "data": 103,
+          "locale": null,
+          "scope": null,
+          "attribute_type": "pim_catalog_metric"
+        }
+      ]
+    }
+  }
+]
