@@ -47,11 +47,10 @@ async def chat_endpoint(request: ChatRequest) -> ChatResponse:
     
     try:
         # Call the asynchronous process_chat function from agent.py
-        reply = await process_chat(
+        return await process_chat(
             message=request.user_message,
             context=request.dom_context
         )
-        return ChatResponse(agent_reply=reply)
     except Exception as e:
         logger.error(f"Error in chat endpoint: {e}")
         raise HTTPException(status_code=500, detail="Internal server error while processing chat.")

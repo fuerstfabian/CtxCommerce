@@ -87,12 +87,21 @@ async def ingest_data() -> None:
     # Generate meaningful text fields to embed for each product
     documents_to_embed = []
     for product in products:
-        name = product.get("name", "")
-        description = product.get("description", "")
-        category = product.get("category", "")
+        values = product.get("values", {})
+        
+        # Navigate the Akeneo PIM style nested structure
+        name_arr = values.get("name", [{"data": ""}])
+        name = name_arr[0].get("data", "") if name_arr else ""
+        
+        desc_arr = values.get("description", [{"data": ""}])
+        description = desc_arr[0].get("data", "") if desc_arr else ""
+        
+        # Categories are usually on the root level in this PIM export
+        categories = product.get("categories", [])
+        category_str = ", ".join(categories)
         
         # Combine contextual fields into one rich textual representation
-        doc_string = f"Name: {name}\nCategory: {category}\nDescription: {description}"
+        doc_string = f"Name: {name}\nCategories: {category_str}\nDescription: {description}"
         documents_to_embed.append(doc_string)
         
     # Compute vectors
