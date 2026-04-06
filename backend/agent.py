@@ -17,6 +17,7 @@ class AgentResult(BaseModel):
     """Structured output from the Pydantic AI agent."""
     reply: str = Field(..., description="The conversational response to the user.")
     action_id: Optional[str] = Field(None, description="The data-agent-id of the element to click, if an action is needed.")
+    redirect_url: Optional[str] = Field(None, description="The URL to redirect the user to, e.g., ?product_id=X.")
 
 logger = logging.getLogger(__name__)
 
@@ -43,6 +44,7 @@ CRITICAL INSTRUCTIONS FOR YOUR BEHAVIOR:
 5. LANGUAGE: The product data is in English, but you MUST translate your final advice and the product descriptions naturally into the language the user is speaking (e.g., German, French, Spanish, etc.).
 6. CONVERSATIONAL TONE (CRITICAL): NEVER present product data as rigid lists or bullet points (e.g., avoiding formats like "Name: [X], Description: [Y]"). Instead, weave the product names, weights, and features naturally into a flowing, conversational paragraph, just like a human sales expert would speak to a customer in a physical store.
 7. ACTION EXECUTION: The DOM context provides a list of interactiveElements with their corresponding data-agent-ids. If the user asks you to interact with the page (e.g., 'add to cart', 'click the button'), you MUST find the correct ID from the context and include it in your structured output as action_id. If no action is needed, leave it null.
+8. NAVIGATION: If the user explicitly asks to see, open, or go to a product you are recommending from the database, you must extract its identifier from the PIM JSON payload. Construct a relative URL like ?product_id=<identifier> and set it as the redirect_url in your structured output. Do not do this unless the user implies they want to visit the page.
 """
 
 # Initialize the Pydantic AI Agent
@@ -89,11 +91,13 @@ async def process_chat(message: str, context: Optional[Union[Dict[str, Any], str
         result = await agent.run(prompt)
         return ChatResponse(
             agent_reply=result.output.reply,
-            action_target_id=result.output.action_id
+            action_target_id=result.output.action_id,
+            redirect_url=result.output.redirect_url
         )
     except Exception as e:
         logger.error(f"Error during agent execution: {e}")
         return ChatResponse(
             agent_reply="I apologize, but I encountered an error while processing your request. Please try again later.",
-            action_target_id=None
+            action_target_id=None,
+            redirect_url=None
         )

@@ -241,7 +241,12 @@
                 this.addMessage(data.agent_reply, false);
                 
                 // 6. Action Execution (Browser Control)
-                if (data.action_target_id) {
+                if (data.redirect_url) {
+                    this.addMessage(`<i>⚙️ System: Redirecting to product page...</i>`, false);
+                    setTimeout(() => {
+                        window.location.href = data.redirect_url;
+                    }, 1500);
+                } else if (data.action_target_id) {
                     const targetEl = document.querySelector(`[data-agent-id="${data.action_target_id}"]`);
                     if (targetEl) {
                         try {
