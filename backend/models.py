@@ -1,7 +1,7 @@
 """
 Pydantic models for the CtxCommerce API request and response structures.
 """
-from typing import Optional, Any, Union, Dict
+from typing import Optional, Any, Union, Dict, List
 from pydantic import BaseModel, Field
 
 class ChatRequest(BaseModel):
@@ -11,6 +11,9 @@ class ChatRequest(BaseModel):
     user_message: str = Field(..., description="The message sent by the user.")
     dom_context: Optional[Union[Dict[str, Any], str]] = Field(
         None, description="The current DOM context of the shop website (e.g., product ID, page title)."
+    )
+    chat_history: Optional[List[Dict[str, str]]] = Field(
+        default_factory=list, description="List of previous conversation turns e.g. [{'role': 'user', 'content': '...'}]"
     )
 
 class ChatResponse(BaseModel):

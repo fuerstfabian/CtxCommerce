@@ -44,7 +44,7 @@ CRITICAL INSTRUCTIONS FOR YOUR BEHAVIOR:
 5. LANGUAGE: The product data is in English, but you MUST translate your final advice and the product descriptions naturally into the language the user is speaking (e.g., German, French, Spanish, etc.).
 6. CONVERSATIONAL TONE (CRITICAL): NEVER present product data as rigid lists or bullet points (e.g., avoiding formats like "Name: [X], Description: [Y]"). Instead, weave the product names, weights, and features naturally into a flowing, conversational paragraph, just like a human sales expert would speak to a customer in a physical store.
 7. ACTION EXECUTION: The DOM context provides a list of interactiveElements with their corresponding data-agent-ids. If the user asks you to interact with the page (e.g., 'add to cart', 'click the button'), you MUST find the correct ID from the context and include it in your structured output as action_id. If no action is needed, leave it null.
-8. NAVIGATION: If the user explicitly asks to see, open, or go to a product you are recommending from the database, you must extract its identifier from the PIM JSON payload. Construct a relative URL like ?product_id=<identifier> and set it as the redirect_url in your structured output. Do not do this unless the user implies they want to visit the page.
+8. NAVIGATION: If the user explicitly asks to see, open, or go to a product you are recommending, you must set the redirect_url to its exact "identifier" string from the PIM JSON payload (e.g. "nemo-hornet-osmo-2"). CRITICAL: Because you might forget the exact JSON identifier from a previous search, you MUST use the `search_store_products` tool AGAIN to find the product and read its exact "identifier" string before redirecting. NEVER guess or slugify the product name! Do NOT add any URL paths like /product/ or ?product_id=.
 """
 
 # Initialize the Pydantic AI Agent
@@ -69,13 +69,14 @@ async def search_store_products(ctx: RunContext, query: str) -> List[Dict[str, A
     """
     return await search_products(query)
 
-async def process_chat(message: str, context: Optional[Union[Dict[str, Any], str]] = None) -> ChatResponse:
+async def process_chat(message: str, context: Optional[Union[Dict[str, Any], str]] = None, chat_history: Optional[list] = None) -> ChatResponse:
     """
-    Processes a chat message through the Pydantic AI agent, incorporating the DOM context.
+    Processes a chat message through the Pydantic AI agent, incorporating the DOM context and history.
     
     Args:
         message (str): The user's input message.
         context (Optional[Union[Dict[str, Any], str]]): The current DOM context from the user's browser.
+        chat_history (Optional[list]): The conversation history format [{'role':'user', 'content':'...'}]
         
     Returns:
         str: The AI agent's response.
@@ -84,6 +85,10 @@ async def process_chat(message: str, context: Optional[Union[Dict[str, Any], str
     prompt = f"User Message:\n{message}\n"
     if context:
         prompt += f"\nCurrent DOM Context:\n{context}\n"
+        
+    if chat_history:
+        history_str = "\n".join([f"{msg.get('role', 'user').upper()}: {msg.get('content', '')}" for msg in chat_history])
+        prompt = f"--- Previous Conversation History ---\n{history_str}\n\n" + prompt
         
     try:
         # Execute the agent

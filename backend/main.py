@@ -49,7 +49,8 @@ async def chat_endpoint(request: ChatRequest) -> ChatResponse:
         # Call the asynchronous process_chat function from agent.py
         return await process_chat(
             message=request.user_message,
-            context=request.dom_context
+            context=request.dom_context,
+            chat_history=request.chat_history
         )
     except Exception as e:
         logger.error(f"Error in chat endpoint: {e}")
