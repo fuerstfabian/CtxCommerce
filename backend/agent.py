@@ -7,6 +7,7 @@ import logging
 from typing import Optional, Union, Dict, Any, List
 
 from pydantic_ai import Agent, RunContext
+import json
 from dotenv import load_dotenv
 
 from backend.database import search_products
@@ -69,31 +70,63 @@ async def search_store_products(ctx: RunContext, query: str) -> List[Dict[str, A
     """
     return await search_products(query)
 
-async def process_chat(message: str, context: Optional[Union[Dict[str, Any], str]] = None, chat_history: Optional[list] = None) -> ChatResponse:
+async def get_chat_history(session_id: str, redis_client) -> List[Dict[str, str]]:
+    """Retrieve chat history natively formatted from Redis."""
+    if not redis_client:
+        return []
+    try:
+        data = await redis_client.get(f"session:{session_id}")
+        if data:
+            return json.loads(data)
+    except Exception as e:
+        logger.error(f"Failed to retrieve chat history from Redis: {e}")
+    return []
+
+async def save_chat_history(session_id: str, history_list: List[Dict[str, str]], redis_client):
+    """Save plain text chat history back to Redis with a 24-hour TTL."""
+    if not redis_client:
+        return
+    try:
+        data = json.dumps(history_list)
+        # 86400 seconds = 24 hours
+        await redis_client.setex(f"session:{session_id}", 86400, data)
+    except Exception as e:
+        logger.error(f"Failed to save chat history to Redis: {e}")
+
+async def process_chat(
+    message: str, 
+    context: Optional[Union[Dict[str, Any], str]] = None, 
+    session_id: Optional[str] = None, 
+    redis_client = None
+) -> ChatResponse:
     """
-    Processes a chat message through the Pydantic AI agent, incorporating the DOM context and history.
-    
-    Args:
-        message (str): The user's input message.
-        context (Optional[Union[Dict[str, Any], str]]): The current DOM context from the user's browser.
-        chat_history (Optional[list]): The conversation history format [{'role':'user', 'content':'...'}]
-        
-    Returns:
-        str: The AI agent's response.
+    Processes a chat message through the Pydantic AI agent, incorporating the DOM context and Redis history.
     """
-    # Construct a complete prompt including the context if provided
     prompt = f"User Message:\n{message}\n"
     if context:
         prompt += f"\nCurrent DOM Context:\n{context}\n"
         
-    if chat_history:
-        history_str = "\n".join([f"{msg.get('role', 'user').upper()}: {msg.get('content', '')}" for msg in chat_history])
+    # Fetch history if Redis is active
+    history = []
+    if session_id and redis_client:
+        history = await get_chat_history(session_id, redis_client)
+        
+    if history:
+        history_str = "\n".join([f"{msg.get('role', 'user').upper()}: {msg.get('content', '')}" for msg in history])
         prompt = f"--- Previous Conversation History ---\n{history_str}\n\n" + prompt
         
     try:
-        # Execute the agent
         logger.info(f"Running agent with model string: {agent_model}")
         result = await agent.run(prompt)
+        
+        # Build text string to save array
+        if session_id and redis_client:
+            history.append({"role": "user", "content": message})
+            history.append({"role": "agent", "content": result.output.reply})
+            if len(history) > 12:
+                history = history[-12:]
+            await save_chat_history(session_id, history, redis_client)
+
         return ChatResponse(
             agent_reply=result.output.reply,
             action_target_id=result.output.action_id,

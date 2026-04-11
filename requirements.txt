@@ -5,3 +5,4 @@ google-genai
 qdrant-client
 python-dotenv
 fastembed
+redis

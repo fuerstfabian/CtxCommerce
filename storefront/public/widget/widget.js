@@ -81,10 +81,45 @@
             this.isOpen = false;
             this.API_URL = "http://localhost:8000/api/chat";
             this.isWaitingForResponse = false;
-            this.chatHistory = [];
+            this.sessionId = this.initSession();
 
             this.initUI();
             this.attachEventListeners();
+        }
+
+        initSession() {
+            let sid = localStorage.getItem('ctx_session_id');
+            if (!sid) {
+                // Generate a standard UUID v4 securely
+                if (crypto && crypto.randomUUID) {
+                    sid = crypto.randomUUID();
+                } else {
+                    sid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                        return v.toString(16);
+                    });
+                }
+                localStorage.setItem('ctx_session_id', sid);
+            }
+            return sid;
+        }
+
+        async restoreHistory() {
+            try {
+                const response = await fetch(`${this.API_URL}/history`, {
+                    headers: { 'X-Session-ID': this.sessionId }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.history && data.history.length > 0) {
+                        data.history.forEach(item => {
+                            this.addMessage(item.content, item.role === 'user');
+                        });
+                    }
+                }
+            } catch (error) {
+                console.error("Failed to restore chat history:", error);
+            }
         }
 
         initUI() {
@@ -142,6 +177,9 @@
             this.sendBtn = this.root.querySelector('#ctx-send-btn');
             this.triggerBtn = this.root.querySelector('#ctx-trigger-btn');
             this.closeBtn = this.root.querySelector('#ctx-close-btn');
+
+            // Restore visual history from Redis
+            this.restoreHistory();
         }
 
         attachEventListeners() {
@@ -222,15 +260,15 @@
 
             try {
                 // 4. Dispatch the bundled payload to the FastAPI execution endpoint
-                const response = await fetch(API_URL, {
+                const response = await fetch(this.API_URL, {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'X-Session-ID': this.sessionId
                     },
                     body: JSON.stringify({
                         user_message: messageStr,
-                        dom_context: currentContext,
-                        chat_history: this.chatHistory
+                        dom_context: currentContext
                     })
                 });
 
@@ -243,13 +281,6 @@
                 // 5. Present the Agent's Reply
                 this.removeLoading();
                 this.addMessage(data.agent_reply, false);
-                
-                // Track conversation memory (max 6 turns)
-                this.chatHistory.push({role: "user", content: messageStr});
-                this.chatHistory.push({role: "agent", content: data.agent_reply});
-                if (this.chatHistory.length > 12) {
-                    this.chatHistory = this.chatHistory.slice(-12);
-                }
                 
                 // 6. Action Execution (Browser Control)
                 if (data.redirect_url) {

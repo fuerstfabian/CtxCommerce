@@ -12,10 +12,6 @@ class ChatRequest(BaseModel):
     dom_context: Optional[Union[Dict[str, Any], str]] = Field(
         None, description="The current DOM context of the shop website (e.g., product ID, page title)."
     )
-    chat_history: Optional[List[Dict[str, str]]] = Field(
-        default_factory=list, description="List of previous conversation turns e.g. [{'role': 'user', 'content': '...'}]"
-    )
-
 class ChatResponse(BaseModel):
     """
     Represents the agent's reply to the chat message.
