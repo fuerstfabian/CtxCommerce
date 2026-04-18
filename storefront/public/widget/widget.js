@@ -8,7 +8,7 @@
 (() => {
     // ---- CONFIGURATION ----
     const API_URL = 'http://127.0.0.1:8000/api/chat';
-    
+
     /**
      * DOM Scanner Logic
      * Extracts semantic product data, parses URL state, and indexes interactive elements.
@@ -48,20 +48,20 @@
         let agentIdCounter = 1;
         const clickableSelectors = 'button, a[href]';
         const elements = document.querySelectorAll(clickableSelectors);
-        
+
         elements.forEach(el => {
             // Avoid tagging the widget elements themselves
             if (el.closest('#ctx-widget-root')) return;
-            
+
             // Generate a unique ID if not already present
             if (!el.hasAttribute('data-agent-id')) {
                 el.setAttribute('data-agent-id', `ctx-el-${agentIdCounter++}`);
             }
-            
+
             // Extract meaningful text or context from the element
             const textContent = el.innerText || el.value || el.getAttribute('aria-label') || '';
             const cleanedText = textContent.trim().replace(/\s+/g, ' ');
-            
+
             if (cleanedText) {
                 context.interactiveElements.push({
                     agentId: el.getAttribute('data-agent-id'),
@@ -75,7 +75,7 @@
     }
 
     // ---- UI Component Logic ----
-    
+
     class CtxWidget {
         constructor() {
             this.isOpen = false;
@@ -94,7 +94,7 @@
                 if (crypto && crypto.randomUUID) {
                     sid = crypto.randomUUID();
                 } else {
-                    sid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    sid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
                         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
                         return v.toString(16);
                     });
@@ -185,7 +185,7 @@
         attachEventListeners() {
             this.triggerBtn.addEventListener('click', () => this.toggleChat(true));
             this.closeBtn.addEventListener('click', () => this.toggleChat(false));
-            
+
             this.sendBtn.addEventListener('click', () => this.handleSend());
             this.inputField.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') this.handleSend();
@@ -209,11 +209,11 @@
         addMessage(text, isUser = false) {
             const msgDiv = document.createElement('div');
             msgDiv.className = `ctx-message ${isUser ? 'ctx-message-user' : 'ctx-message-agent'}`;
-            
+
             // Simple markdown-to-html replacement for bold text and line breaks from the backend
             let formattedText = text.replace(/\\n/g, '<br>');
             formattedText = formattedText.replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>');
-            
+
             msgDiv.innerHTML = formattedText;
             this.messagesContainer.appendChild(msgDiv);
             this.scrollToBottom();
@@ -272,16 +272,37 @@
                     })
                 });
 
+                if (response.status === 422) {
+                    this.removeLoading();
+
+                    // 1. Browsersprache auslesen (z.B. "de-DE" oder "en-US") und auf die ersten zwei Buchstaben kürzen
+                    const userLang = (navigator.language || navigator.userLanguage).split('-')[0].toLowerCase();
+
+                    // 2. Ein kleines Dictionary für die wichtigsten Sprachen
+                    const refusalMessages = {
+                        'de': 'Ich kann diese Anfrage nicht verarbeiten. Ich bin ein KI-Assistent für Produkte und Navigation in diesem Shop. Wie kann ich heute helfen?',
+                        'en': 'I cannot process this request. I am an AI assistant dedicated to helping you with this store\'s products and navigation. How can I assist you today?',
+                        'fr': 'Je ne peux pas traiter cette demande. Je suis un assistant IA dédié à vous aider avec les produits et la navigation de cette boutique. Comment puis-je vous aider aujourd\'hui?',
+                        'es': 'No puedo procesar esta solicitud. Soy un asistente de IA dedicado a ayudarle con los productos y la navegación de esta tienda. ¿Cómo puedo ayudarle hoy?'
+                    };
+
+                    // 3. Wähle die Sprache aus, oder falle auf Englisch (Fallback) zurück, falls die Sprache nicht im Dictionary ist
+                    const replyText = refusalMessages[userLang] || refusalMessages['en'];
+
+                    this.addMessage(replyText, false);
+                    return;
+                }
+
                 if (!response.ok) {
                     throw new Error(`API returned status: ${response.status}`);
                 }
 
                 const data = await response.json();
-                
+
                 // 5. Present the Agent's Reply
                 this.removeLoading();
                 this.addMessage(data.agent_reply, false);
-                
+
                 // 6. Action Execution (Browser Control)
                 if (data.redirect_url) {
                     this.addMessage(`<i>⚙️ System: Redirecting to product page...</i>`, false);

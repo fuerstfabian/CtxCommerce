@@ -18,7 +18,7 @@ class AgentResult(BaseModel):
     """Structured output from the Pydantic AI agent."""
     is_in_scope: bool = Field(..., description="Evaluate if the user query is related to outdoor gear, shopping, or our UI tools BEFORE answering.")
     intent_category: str = Field(..., description="Classify the intent (e.g., 'product_search', 'chitchat', 'malicious_injection', 'out_of_scope').")
-    reply: str = Field(..., description="The conversational response to the user. If is_in_scope is false, this must be a standard polite refusal: 'I can only assist with outdoor gear and store navigation.'")
+    reply: str = Field(..., description="The conversational response to the user. If is_in_scope is false, this must be a standard polite refusal: 'I can only assist with product search and store navigation.'")
     action_id: Optional[str] = Field(None, description="The data-agent-id of the element to click, if an action is needed. Must be null if is_in_scope is false.")
     redirect_url: Optional[str] = Field(None, description="The URL to redirect the user to, e.g., ?product_id=X. Must be null if is_in_scope is false.")
 
