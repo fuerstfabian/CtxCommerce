@@ -3,7 +3,7 @@
  * Modern, glassmorphism-inspired design with smooth animations.
  */
 
-:root {
+:root, :host {
     --ctx-primary: #8b5cf6;
     --ctx-primary-hover: #7c3aed;
     --ctx-bg: #ffffff;

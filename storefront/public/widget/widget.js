@@ -76,13 +76,19 @@
 
     // ---- UI Component Logic ----
 
-    class CtxWidget {
+    class CtxAIAgent extends HTMLElement {
         constructor() {
+            super();
+            this.attachShadow({ mode: 'open' });
+
             this.isOpen = false;
             this.API_URL = "http://localhost:8000/api/chat";
             this.isWaitingForResponse = false;
             this.sessionId = this.initSession();
+        }
 
+        connectedCallback() {
+            // Wait for element to be attached before actually building the DOM to prevent FOUC / lifecycle bugs
             this.initUI();
             this.attachEventListeners();
         }
@@ -133,50 +139,46 @@
             };
             const welcomeMessage = greetings[userLang] || greetings['en'];
 
-            // Create root container
-            this.root = document.createElement('div');
-            this.root.id = 'ctx-widget-root';
-            this.root.className = 'ctx-widget-container';
+            // Inject foundational HTML Structure and CSS for the Chat elements into Shadow DOM
+            this.shadowRoot.innerHTML = `
+                <link rel="stylesheet" href="/widget/widget.css">
+                <div id="ctx-widget-root" class="ctx-widget-container">
+                    <!-- Expanded Chat Window -->
+                    <div class="ctx-chat-window" id="ctx-chat-window">
+                        <div class="ctx-chat-header">
+                            <div>
+                                <h3 class="ctx-chat-title">AI Sales Guide</h3>
+                                <p class="ctx-chat-subtitle">Powered by CtxCommerce</p>
+                            </div>
+                            <button class="ctx-close-btn" id="ctx-close-btn">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                            </button>
+                        </div>
+                        <div class="ctx-chat-messages" id="ctx-chat-messages">
+                            <div class="ctx-message ctx-message-agent">
+                                ${welcomeMessage}
+                            </div>
+                        </div>
+                        <div class="ctx-input-area">
+                            <input type="text" class="ctx-input" id="ctx-chat-input" placeholder="Ask anything about the page..." autocomplete="off">
+                            <button class="ctx-send-btn" id="ctx-send-btn">Send</button>
+                        </div>
+                    </div>
 
-            // Inject foundational HTML Structure for the Chat elements
-            this.root.innerHTML = `
-                <!-- Expanded Chat Window -->
-                <div class="ctx-chat-window" id="ctx-chat-window">
-                    <div class="ctx-chat-header">
-                        <div>
-                            <h3 class="ctx-chat-title">AI Sales Guide</h3>
-                            <p class="ctx-chat-subtitle">Powered by CtxCommerce</p>
-                        </div>
-                        <button class="ctx-close-btn" id="ctx-close-btn">
-                            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-                        </button>
-                    </div>
-                    <div class="ctx-chat-messages" id="ctx-chat-messages">
-                        <div class="ctx-message ctx-message-agent">
-                            ${welcomeMessage}
-                        </div>
-                    </div>
-                    <div class="ctx-input-area">
-                        <input type="text" class="ctx-input" id="ctx-chat-input" placeholder="Ask anything about the page..." autocomplete="off">
-                        <button class="ctx-send-btn" id="ctx-send-btn">Send</button>
-                    </div>
+                    <!-- Collapsed Trigger Button -->
+                    <button class="ctx-trigger-btn" id="ctx-trigger-btn" aria-label="Open AI Chat">
+                        <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
+                    </button>
                 </div>
-
-                <!-- Collapsed Trigger Button -->
-                <button class="ctx-trigger-btn" id="ctx-trigger-btn" aria-label="Open AI Chat">
-                    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/></svg>
-                </button>
             `;
 
-            document.body.appendChild(this.root);
-
             // Cache UI DOM elements for easy access
-            this.chatWindow = this.root.querySelector('#ctx-chat-window');
-            this.messagesContainer = this.root.querySelector('#ctx-chat-messages');
-            this.inputField = this.root.querySelector('#ctx-chat-input');
-            this.sendBtn = this.root.querySelector('#ctx-send-btn');
-            this.triggerBtn = this.root.querySelector('#ctx-trigger-btn');
-            this.closeBtn = this.root.querySelector('#ctx-close-btn');
+            this.chatWindow = this.shadowRoot.querySelector('#ctx-chat-window');
+            this.messagesContainer = this.shadowRoot.querySelector('#ctx-chat-messages');
+            this.inputField = this.shadowRoot.querySelector('#ctx-chat-input');
+            this.sendBtn = this.shadowRoot.querySelector('#ctx-send-btn');
+            this.triggerBtn = this.shadowRoot.querySelector('#ctx-trigger-btn');
+            this.closeBtn = this.shadowRoot.querySelector('#ctx-close-btn');
 
             // Restore visual history from Redis
             this.restoreHistory();
@@ -275,10 +277,8 @@
                 if (response.status === 422) {
                     this.removeLoading();
 
-                    // 1. Browsersprache auslesen (z.B. "de-DE" oder "en-US") und auf die ersten zwei Buchstaben kürzen
                     const userLang = (navigator.language || navigator.userLanguage).split('-')[0].toLowerCase();
 
-                    // 2. Ein kleines Dictionary für die wichtigsten Sprachen
                     const refusalMessages = {
                         'de': 'Ich kann diese Anfrage nicht verarbeiten. Ich bin ein KI-Assistent für Produkte und Navigation in diesem Shop. Wie kann ich heute helfen?',
                         'en': 'I cannot process this request. I am an AI assistant dedicated to helping you with this store\'s products and navigation. How can I assist you today?',
@@ -286,7 +286,6 @@
                         'es': 'No puedo procesar esta solicitud. Soy un asistente de IA dedicado a ayudarle con los productos y la navegación de esta tienda. ¿Cómo puedo ayudarle hoy?'
                     };
 
-                    // 3. Wähle die Sprache aus, oder falle auf Englisch (Fallback) zurück, falls die Sprache nicht im Dictionary ist
                     const replyText = refusalMessages[userLang] || refusalMessages['en'];
 
                     this.addMessage(replyText, false);
@@ -336,11 +335,16 @@
         }
     }
 
+    // Define the Web Component
+    customElements.define('ctx-ai-agent', CtxAIAgent);
+
     // Embed the widget actively into the layout whenever the document finishes loading.
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => new CtxWidget());
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.appendChild(document.createElement('ctx-ai-agent'));
+        });
     } else {
-        new CtxWidget();
+        document.body.appendChild(document.createElement('ctx-ai-agent'));
     }
 
 })();
