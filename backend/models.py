@@ -2,16 +2,26 @@
 Pydantic models for the CtxCommerce API request and response structures.
 """
 from typing import Optional, Any, Union, Dict, List
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 class ChatRequest(BaseModel):
     """
     Represents an incoming chat message request from the client.
     """
-    user_message: str = Field(..., description="The message sent by the user.")
+    user_message: str = Field(..., max_length=500, description="The message sent by the user.")
     dom_context: Optional[Union[Dict[str, Any], str]] = Field(
         None, description="The current DOM context of the shop website (e.g., product ID, page title)."
     )
+
+    @field_validator('user_message')
+    @classmethod
+    def validate_no_injection(cls, v: str) -> str:
+        v_lower = v.lower()
+        blocklist = ["ignore previous", "system prompt", "bypass", "forget everything", "disregard previous"]
+        for phrase in blocklist:
+            if phrase in v_lower:
+                raise ValueError("Blocked phrase detected in input.")
+        return v
 class ChatResponse(BaseModel):
     """
     Represents the agent's reply to the chat message.
