@@ -1,5 +1,6 @@
 import { getAllProducts } from '../../lib/products';
-import ProductCard from '../../components/ProductCard';
+import FilterableProductGrid from '../../components/FilterableProductGrid';
+import { Suspense } from 'react';
 
 export default async function AllProductsPage() {
   const products = await getAllProducts();
@@ -11,11 +12,9 @@ export default async function AllProductsPage() {
         <p className="text-slate-500 text-lg">Browse our complete collection of {products.length} premium ultralight items.</p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <ProductCard key={product.uuid} product={product} />
-        ))}
-      </div>
+      <Suspense fallback={<div className="py-20 text-center text-slate-500">Loading Product Filters...</div>}>
+        <FilterableProductGrid initialProducts={products} />
+      </Suspense>
     </div>
   );
 }

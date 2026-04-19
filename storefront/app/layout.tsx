@@ -61,14 +61,14 @@ export default function RootLayout({
           <div className="bg-slate-800 w-full hidden md:block border-b border-emerald-500">
             <div className="container mx-auto px-4 h-12 flex items-center justify-center">
               <nav className="flex items-center gap-8 text-sm font-semibold text-slate-300">
-                <Link href="/category/tents" className="hover:text-white transition-colors">Tents</Link>
-                <Link href="/category/backpacks" className="hover:text-white transition-colors">Backpacks</Link>
-                <Link href="/category/sleeping-pads" className="hover:text-white transition-colors">Sleeping Pads</Link>
-                <Link href="/category/sleepingbags-quilts" className="hover:text-white transition-colors">Sleepingbags/Quilts</Link>
-                <Link href="/category/jackets" className="hover:text-white transition-colors">Jackets</Link>
-                <Link href="/category/pants" className="hover:text-white transition-colors">Pants</Link>
-                <Link href="/category/shoes" className="hover:text-white transition-colors">Shoes</Link>
-                <Link href="/category/equipment" className="hover:text-white transition-colors">Equipment</Link>
+                <Link href="/tents" className="hover:text-white transition-colors">Tents</Link>
+                <Link href="/backpacks" className="hover:text-white transition-colors">Backpacks</Link>
+                <Link href="/sleeping-pads" className="hover:text-white transition-colors">Sleeping Pads</Link>
+                <Link href="/sleepingbags-quilts" className="hover:text-white transition-colors">Sleepingbags/Quilts</Link>
+                <Link href="/jackets" className="hover:text-white transition-colors">Jackets</Link>
+                <Link href="/pants" className="hover:text-white transition-colors">Pants</Link>
+                <Link href="/shoes" className="hover:text-white transition-colors">Shoes</Link>
+                <Link href="/equipment" className="hover:text-white transition-colors">Equipment</Link>
               </nav>
             </div>
           </div>

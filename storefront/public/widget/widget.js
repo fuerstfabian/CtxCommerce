@@ -307,7 +307,7 @@
                     this.addMessage(`<i>⚙️ System: Redirecting to product page...</i>`, false);
                     setTimeout(() => {
                         // Strategy: The widget determines the shop's URL routing format, keeping the AI domain-agnostic!
-                        window.location.href = `/product/${data.redirect_url}`;
+                        window.location.href = `/${data.redirect_url}`;
                     }, 1500);
                 } else if (data.action_target_id) {
                     const targetEl = document.querySelector(`[data-agent-id="${data.action_target_id}"]`);

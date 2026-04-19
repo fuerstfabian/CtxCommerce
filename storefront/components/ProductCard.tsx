@@ -4,7 +4,7 @@ import { PimProduct } from '../lib/products';
 import Image from 'next/image';
 
 // Deterministic hashing assignment for product UI mappings
-function getDeterministicImage(product: PimProduct) {
+export function getDeterministicImage(product: PimProduct) {
   let prefix = product.family;
   
   // Prefix normalization mappings
@@ -34,7 +34,7 @@ export default function ProductCard({ product }: { product: PimProduct }) {
   const dynamicImageSrc = getDeterministicImage(product);
 
   return (
-    <Link href={`/product/${product.identifier}`} className="group flex flex-col bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all h-full">
+    <Link href={`/${product.identifier}`} className="group flex flex-col bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all h-full">
       <div className="relative w-full aspect-[3/4] bg-slate-100 flex-shrink-0">
         <Image 
           src={dynamicImageSrc} 
