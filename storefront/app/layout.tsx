@@ -63,10 +63,12 @@ export default function RootLayout({
               <nav className="flex items-center gap-8 text-sm font-semibold text-slate-300">
                 <Link href="/category/tents" className="hover:text-white transition-colors">Tents</Link>
                 <Link href="/category/backpacks" className="hover:text-white transition-colors">Backpacks</Link>
-                <Link href="/category/sleeping_pads" className="hover:text-white transition-colors">Sleeping Pads</Link>
-                <Link href="/category/sleeping_bags" className="hover:text-white transition-colors">Quilts</Link>
+                <Link href="/category/sleeping-pads" className="hover:text-white transition-colors">Sleeping Pads</Link>
+                <Link href="/category/sleepingbags-quilts" className="hover:text-white transition-colors">Sleepingbags/Quilts</Link>
                 <Link href="/category/jackets" className="hover:text-white transition-colors">Jackets</Link>
-                <Link href="/category/gear" className="hover:text-white transition-colors">Equipment</Link>
+                <Link href="/category/pants" className="hover:text-white transition-colors">Pants</Link>
+                <Link href="/category/shoes" className="hover:text-white transition-colors">Shoes</Link>
+                <Link href="/category/equipment" className="hover:text-white transition-colors">Equipment</Link>
               </nav>
             </div>
           </div>

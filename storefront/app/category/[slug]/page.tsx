@@ -15,12 +15,17 @@ export default async function CategoryPage(props: { params: Params }) {
   const params = await props.params;
   const allProducts = await getAllProducts();
   
-  const categoryFilter = params.slug.replace('-', '_');
+  const categorySlug = params.slug;
+  let categoryFilter = categorySlug.replace('-', '_');
+  
+  // Custom Slug Overrides
+  if (categorySlug === 'sleepingbags-quilts') categoryFilter = 'sleeping_bags';
+  if (categorySlug === 'sleeping-pads') categoryFilter = 'sleeping_pads';
   
   let filteredProducts = [];
 
-  // Special case for 'gear' which acts as a catch-all for various equipment families
-  if (categoryFilter === 'gear') {
+  // Special case for 'equipment' which acts as a catch-all for various accessory families
+  if (categoryFilter === 'equipment') {
     const gearFamilies = ['stoves', 'water_filters', 'outdoor_furniture', 'electronics', 'cookware', 'trekking_poles'];
     filteredProducts = allProducts.filter(p => gearFamilies.includes(p.family));
   } else {

@@ -2,14 +2,18 @@
 
 import Link from 'next/link';
 
+import Image from 'next/image';
+
 export default function HeroCarousel() {
   return (
     <div className="relative w-full h-[400px] md:h-[500px] lg:h-[600px] bg-slate-900 overflow-hidden group">
       {/* Background Image Setup */}
-      <img 
-        src="https://placehold.co/1920x600/0f172a/10b981?text=Epic+Outdoor+Adventure+Sale" 
+      <Image 
+        src="/images/carousel/carousel.webp" 
         alt="Hero Promotional Banner" 
-        className="w-full h-full object-cover opacity-90 transition-transform duration-700 hover:scale-105"
+        fill
+        priority
+        className="object-cover opacity-90 transition-transform duration-700 hover:scale-105"
       />
       
       {/* Text Overlay for realism */}
