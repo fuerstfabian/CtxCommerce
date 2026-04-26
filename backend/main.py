@@ -2,20 +2,16 @@
 Main FastAPI application module for CtxCommerce.
 """
 import logging
-import os
 from typing import Dict, Any, Optional
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
 import redis.asyncio as redis
 
+from backend.config import REDIS_URL, FRONTEND_URL
 from backend.models import ChatRequest, ChatResponse
 from backend.agent import process_chat, get_chat_history
-
-# Load environment variables
-load_dotenv()
 
 # Configure logging
 logging.basicConfig(
@@ -27,8 +23,8 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup actions
-    logger.info("Initializing Redis connection...")
-    app.state.redis = redis.from_url("redis://localhost:6379", decode_responses=True)
+    logger.info(f"Initializing Redis connection to {REDIS_URL}...")
+    app.state.redis = redis.from_url(REDIS_URL, decode_responses=True)
     yield
     # Shutdown actions
     logger.info("Closing Redis connection...")
@@ -42,11 +38,10 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# Configure CORS (Dynamic with fallback)
-frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
+# Configure CORS — origin sourced from config.py
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url],
+    allow_origins=[FRONTEND_URL],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

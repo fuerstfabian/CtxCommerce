@@ -2,6 +2,8 @@
 Database interaction module for CtxCommerce.
 Handles connections and queries to the local Qdrant Vector Database
 using FastEmbed for on-the-fly query vectorization.
+
+Connection parameters are sourced exclusively from config.py.
 """
 import logging
 from typing import List, Dict, Any
@@ -9,11 +11,9 @@ from typing import List, Dict, Any
 from qdrant_client import AsyncQdrantClient
 from fastembed import TextEmbedding
 
-logger = logging.getLogger(__name__)
+from backend.config import QDRANT_URL, COLLECTION_NAME, EMBEDDING_MODEL
 
-QDRANT_URL = "http://localhost:6333"
-COLLECTION_NAME = "products"
-EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
+logger = logging.getLogger(__name__)
 
 # Initialize singletons for the Qdrant Client and Embedding Model
 # Initialized globally so they are reused across requests, minimizing latency.
