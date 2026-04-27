@@ -8,6 +8,9 @@
 (() => {
     // ---- CONFIGURATION ----
 
+    let cachedProductData = null;
+    let productDataParsed = false;
+
     /**
      * DOM Scanner Logic
      * Extracts semantic product data, parses URL state, and indexes interactive elements.
@@ -28,19 +31,23 @@
             context.urlParams[key] = value;
         }
 
-        // 2. Extract application/ld+json SEO data
-        const jsonLdScripts = document.querySelectorAll('script[type="application/ld+json"]');
-        jsonLdScripts.forEach(script => {
-            try {
-                const data = JSON.parse(script.textContent);
-                // Simple heuristic: look for Product schema or offer types commonly found in ecommerce
-                if (data['@type'] && data['@type'].toLowerCase() === 'product') {
-                    context.productData = data;
+        // 2. Extract application/ld+json SEO data (Cached)
+        if (!productDataParsed) {
+            const jsonLdScripts = document.querySelectorAll('script[type="application/ld+json"]');
+            jsonLdScripts.forEach(script => {
+                try {
+                    const data = JSON.parse(script.textContent);
+                    // Simple heuristic: look for Product schema or offer types commonly found in ecommerce
+                    if (data['@type'] && data['@type'].toLowerCase() === 'product') {
+                        cachedProductData = data;
+                    }
+                } catch (e) {
+                    console.warn('CtxScanner: Failed to parse ld+json block.', e);
                 }
-            } catch (e) {
-                console.warn('CtxScanner: Failed to parse ld+json block.', e);
-            }
-        });
+            });
+            productDataParsed = true;
+        }
+        context.productData = cachedProductData;
 
         // 3. Map Interactive Elements
         // We find all buttons and links, giving them a unique identifier so the AI can reference them.

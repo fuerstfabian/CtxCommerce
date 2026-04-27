@@ -23,7 +23,7 @@ async def check_malicious_intent(user_message: str) -> bool:
     latency. The prompt template is maintained in prompts.py (SoC).
 
     Returns True if the message is classified as malicious, False otherwise.
-    Fails open (returns False) on errors to avoid blocking legitimate requests.
+    Fails closed (returns True) on errors to prevent bypassing security.
     """
     # Deferred imports to prevent circular import chains and keep
     # guardrails.py free of top-level internal dependencies.
@@ -45,7 +45,9 @@ async def check_malicious_intent(user_message: str) -> bool:
         return is_malicious
     except Exception as e:
         logger.error(f"Pre-flight classifier error: {e}")
-        return False
+        # Fail-closed: if the security check cannot run, treat the message as potentially malicious
+        # to prevent attackers from exploiting transient API errors to bypass the guardrail.
+        return True
 
 
 # ---------------------------------------------------------------------------
