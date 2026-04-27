@@ -1,6 +1,7 @@
 """
 Pydantic models for the CtxCommerce API request and response structures.
 """
+import json
 from typing import Optional, Any, Union, Dict, List
 from pydantic import BaseModel, Field, field_validator
 
@@ -13,15 +14,17 @@ class ChatRequest(BaseModel):
         None, description="The current DOM context of the shop website (e.g., product ID, page title)."
     )
 
-    @field_validator('user_message')
+    @field_validator('dom_context')
     @classmethod
-    def validate_no_injection(cls, v: str) -> str:
-        v_lower = v.lower()
-        blocklist = ["ignore previous", "system prompt", "bypass", "forget everything", "disregard previous"]
-        for phrase in blocklist:
-            if phrase in v_lower:
-                raise ValueError("Blocked phrase detected in input.")
+    def limit_context_size(cls, v):
+        """Reject oversized DOM contexts to prevent payload flooding and token cost escalation."""
+        if v is None:
+            return v
+        serialized = v if isinstance(v, str) else json.dumps(v)
+        if len(serialized) > 15000:
+            raise ValueError("DOM context payload exceeds the 15,000 character safety limit.")
         return v
+
 class ChatResponse(BaseModel):
     """
     Represents the agent's reply to the chat message.

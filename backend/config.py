@@ -14,6 +14,7 @@ load_dotenv()
 # LLM
 # ---------------------------------------------------------------------------
 LLM_MODEL: str = os.getenv("LLM_MODEL")
+GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
 
 # ---------------------------------------------------------------------------
 # Vector Database (Qdrant)

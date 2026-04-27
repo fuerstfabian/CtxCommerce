@@ -7,6 +7,9 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 import redis.asyncio as redis
 
 from backend.config import REDIS_URL, FRONTEND_URL
@@ -19,6 +22,9 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+
+# Rate limiter — keyed on client IP
+limiter = Limiter(key_func=get_remote_address)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -38,6 +44,10 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+# Register rate limiter
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
 # Configure CORS — origin sourced from config.py
 app.add_middleware(
     CORSMiddleware,
@@ -48,9 +58,10 @@ app.add_middleware(
 )
 
 @app.post("/api/chat", response_model=ChatResponse)
+@limiter.limit("15/minute")
 async def chat_endpoint(
-    request: ChatRequest, 
-    fast_request: Request, 
+    request: Request,
+    body: ChatRequest,
     x_session_id: Optional[str] = Header(None, alias="X-Session-ID")
 ) -> ChatResponse:
     """
@@ -67,10 +78,10 @@ async def chat_endpoint(
     try:
         # Call the asynchronous process_chat function from agent.py
         return await process_chat(
-            message=request.user_message,
-            context=request.dom_context,
+            message=body.user_message,
+            context=body.dom_context,
             session_id=x_session_id,
-            redis_client=fast_request.app.state.redis
+            redis_client=request.app.state.redis
         )
     except Exception as e:
         logger.error(f"Error in chat endpoint: {e}")

@@ -1,8 +1,9 @@
-fastapi
-uvicorn
 pydantic-ai
-google-genai
+fastembed
 qdrant-client
 python-dotenv
-fastembed
 redis
+fastapi
+uvicorn
+slowapi
+google-genai

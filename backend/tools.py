@@ -80,8 +80,8 @@ class AgentResult(BaseModel):
         ...,
         description=(
             "The conversational response to the user. "
-            "If is_in_scope is false, this must be: "
-            "'I can only assist with product search and store navigation.'"
+            "If is_in_scope is false, reply with a polite refusal "
+            "strictly IN THE LANGUAGE THE USER IS SPEAKING."
         ),
     )
     action_id: Optional[str] = Field(

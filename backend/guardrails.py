@@ -11,6 +11,44 @@ logger = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
+# Pre-Flight LLM Security Classifier
+# ---------------------------------------------------------------------------
+
+async def check_malicious_intent(user_message: str) -> bool:
+    """
+    Lightweight LLM pre-flight classifier that detects prompt-injection
+    and jailbreak attempts before the main agent processes the message.
+
+    Uses the same Gemini Flash Lite model via google.genai for minimal
+    latency. The prompt template is maintained in prompts.py (SoC).
+
+    Returns True if the message is classified as malicious, False otherwise.
+    Fails open (returns False) on errors to avoid blocking legitimate requests.
+    """
+    # Deferred imports to prevent circular import chains and keep
+    # guardrails.py free of top-level internal dependencies.
+    from google import genai
+    from backend.config import LLM_MODEL, GEMINI_API_KEY
+    from backend.prompts import PRE_FLIGHT_PROMPT
+
+    try:
+        client = genai.Client(api_key=GEMINI_API_KEY)
+        prompt = PRE_FLIGHT_PROMPT.format(user_message=user_message)
+        response = await client.aio.models.generate_content(
+            model=LLM_MODEL,
+            contents=prompt,
+        )
+        classification = response.text.strip().upper()
+        is_malicious = "MALICIOUS" in classification
+        if is_malicious:
+            logger.warning("Pre-flight classifier flagged message as MALICIOUS.")
+        return is_malicious
+    except Exception as e:
+        logger.error(f"Pre-flight classifier error: {e}")
+        return False
+
+
+# ---------------------------------------------------------------------------
 # Internal Helpers
 # ---------------------------------------------------------------------------
 

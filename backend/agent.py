@@ -18,7 +18,7 @@ from backend.config import LLM_MODEL
 from backend.models import ChatResponse
 from backend.prompts import SYSTEM_PROMPT
 from backend.tools import AgentResult, build_url, search_store_products
-from backend.guardrails import validate_slug
+from backend.guardrails import validate_slug, check_malicious_intent
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +41,19 @@ agent = Agent(
 # Programmatic registration avoids passing the Agent instance into tools.py,
 # which would create a circular import.
 agent.tool(search_store_products)
+
+
+# ---------------------------------------------------------------------------
+# Internal Helpers
+# ---------------------------------------------------------------------------
+
+def _sanitize_tags(text: str) -> str:
+    """
+    Strip <user_input> / </user_input> markers from arbitrary text.
+    Prevents XML-tag injection where a user closes the tag early
+    and injects pseudo-system instructions after it.
+    """
+    return text.replace("<user_input>", "").replace("</user_input>", "")
 
 
 # ---------------------------------------------------------------------------
@@ -90,27 +103,67 @@ async def process_chat(
     Processes a single chat message through the Pydantic AI agent,
     incorporating DOM context and Redis-backed conversation history.
 
+    Security pipeline:
+      1. Sanitize XML tags from user message.
+      2. Run LLM pre-flight classifier (check_malicious_intent).
+      3. Execute main agent with structured output.
+      4. Server-side enforcement of is_in_scope.
+
     Called exclusively by main.py's API endpoint.
     """
-    prompt = f"User Message:\n<user_input>{message}</user_input>\n"
+    # --- 1. XML-Tag Sanitization ---
+    sanitized_message = _sanitize_tags(message)
+
+    # --- 2. Pre-Flight Security Check ---
+    if await check_malicious_intent(sanitized_message):
+        logger.warning(f"Pre-flight blocked malicious message. Session: {session_id}")
+        return ChatResponse(
+            agent_reply="error_malicious",
+            action_target_id=None,
+            redirect_url=None,
+        )
+
+    # --- Build prompt ---
+    prompt = f"User Message:\n<user_input>{sanitized_message}</user_input>\n"
     if context:
         prompt += f"\nCurrent DOM Context:\n{context}\n"
 
-    # Fetch history if Redis is active
+    # Fetch and sanitize history
     history: List[Dict[str, str]] = []
     if session_id and redis_client:
         history = await get_chat_history(session_id, redis_client)
 
     if history:
-        history_str = "\n".join(
-            f"{msg.get('role', 'user').upper()}: {msg.get('content', '')}"
+        sanitized_history = [
+            {
+                "role": msg.get("role", "user"),
+                "content": _sanitize_tags(msg.get("content", "")),
+            }
             for msg in history
+        ]
+        history_str = "\n".join(
+            f"{msg['role'].upper()}: {msg['content']}"
+            for msg in sanitized_history
         )
         prompt = f"--- Previous Conversation History ---\n{history_str}\n\n" + prompt
 
     try:
         logger.info(f"Running agent with model: {_agent_model}")
         result = await agent.run(prompt)
+
+        # --- 4. Server-side is_in_scope enforcement ---
+        if not result.output.is_in_scope:
+            logger.info(
+                f"Agent classified message as out-of-scope "
+                f"(intent: {result.output.intent_category})"
+            )
+            # Discard the LLM's reply entirely; return an error key
+            # so the frontend can display a localized refusal.
+            return ChatResponse(
+                agent_reply="error_out_of_scope",
+                action_target_id=None,
+                redirect_url=None,
+            )
 
         # --- Redirect resolution ---
         final_url: Optional[str] = None
@@ -154,10 +207,7 @@ async def process_chat(
     except Exception as e:
         logger.error(f"Error during agent execution: {e}")
         return ChatResponse(
-            agent_reply=(
-                "I apologize, but I encountered an error while processing your request. "
-                "Please try again later."
-            ),
+            agent_reply="error_processing",
             action_target_id=None,
             redirect_url=None,
         )

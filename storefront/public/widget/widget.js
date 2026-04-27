@@ -73,6 +73,84 @@
         return context;
     }
 
+    // ---- INTERNATIONALIZATION ----
+
+    const i18n = {
+        de: {
+            greeting: 'Hallo! Ich sehe, du schaust dir unsere Produkte an. Wie kann ich dir heute helfen?',
+            networkError: 'Es tut mir leid, ich habe gerade Verbindungsprobleme. Bitte versuche es später erneut.',
+            refusal: 'Ich kann diese Anfrage nicht verarbeiten. Ich bin ein KI-Assistent für Produkte und Navigation in diesem Shop. Wie kann ich dir heute helfen?',
+            redirecting: '⚙️ System: Weiterleitung zur Produktseite…',
+            actionExecuted: '⚙️ System: Der Agent hat eine Aktion auf der Seite ausgeführt.',
+            errorMalicious: 'Diese Anfrage kann ich leider nicht verarbeiten. Ich helfe dir gerne bei Produkten, Kategorien und der Navigation im Shop.',
+            errorOutOfScope: 'Ich bin ausschließlich für Produktberatung und Shop-Navigation zuständig. Wie kann ich dir dabei helfen?',
+            errorProcessing: 'Beim Verarbeiten deiner Anfrage ist leider ein Fehler aufgetreten. Bitte versuche es später erneut.',
+            placeholder: 'Frag mich etwas über die Seite…',
+            sendButton: 'Senden',
+            headerTitle: 'KI-Verkaufsberater',
+            headerSubtitle: 'Powered by CtxCommerce',
+        },
+        en: {
+            greeting: 'Hello! I notice you are looking at our products. How can I assist you today?',
+            networkError: "I'm sorry, I'm having trouble connecting to the network right now. Please try again later.",
+            refusal: "I cannot process this request. I am an AI assistant dedicated to helping you with this store's products and navigation. How can I assist you today?",
+            redirecting: '⚙️ System: Redirecting to product page…',
+            actionExecuted: '⚙️ System: Agent executed an action on the page.',
+            errorMalicious: "I'm unable to process that request. I'm here to help you with products, categories, and store navigation.",
+            errorOutOfScope: "I'm dedicated to product advice and store navigation. How can I help you with that?",
+            errorProcessing: 'An error occurred while processing your request. Please try again later.',
+            placeholder: 'Ask anything about the page…',
+            sendButton: 'Send',
+            headerTitle: 'AI Sales Guide',
+            headerSubtitle: 'Powered by CtxCommerce',
+        },
+        fr: {
+            greeting: "Bonjour ! Je vois que vous regardez nos produits. Comment puis-je vous aider aujourd'hui ?",
+            networkError: "Je suis désolé, j'ai des problèmes de connexion. Veuillez réessayer plus tard.",
+            refusal: "Je ne peux pas traiter cette demande. Je suis un assistant IA dédié à vous aider avec les produits et la navigation de cette boutique. Comment puis-je vous aider aujourd'hui ?",
+            redirecting: '⚙️ Système : Redirection vers la page produit…',
+            actionExecuted: `⚙️ Système : L'agent a exécuté une action sur la page.`,
+            errorMalicious: "Je ne suis pas en mesure de traiter cette demande. Je suis là pour vous aider avec les produits et la navigation.",
+            errorOutOfScope: "Je suis dédié aux conseils produits et à la navigation en boutique. Comment puis-je vous aider ?",
+            errorProcessing: "Une erreur s'est produite lors du traitement de votre demande. Veuillez réessayer plus tard.",
+            placeholder: 'Posez une question sur la page…',
+            sendButton: 'Envoyer',
+            headerTitle: 'Guide de Vente IA',
+            headerSubtitle: 'Powered by CtxCommerce',
+        },
+        es: {
+            greeting: '¡Hola! Veo que estás mirando nuestros productos. ¿Cómo puedo ayudarte hoy?',
+            networkError: 'Lo siento, tengo problemas de conexión. Por favor, inténtalo más tarde.',
+            refusal: 'No puedo procesar esta solicitud. Soy un asistente de IA dedicado a ayudarle con los productos y la navegación de esta tienda. ¿Cómo puedo ayudarle hoy?',
+            redirecting: '⚙️ Sistema: Redirigiendo a la página del producto…',
+            actionExecuted: '⚙️ Sistema: El agente ejecutó una acción en la página.',
+            errorMalicious: 'No puedo procesar esa solicitud. Estoy aquí para ayudarte con productos, categorías y navegación en la tienda.',
+            errorOutOfScope: 'Me dedico exclusivamente al asesoramiento de productos y navegación en la tienda. ¿Cómo puedo ayudarte?',
+            errorProcessing: 'Se ha producido un error al procesar tu solicitud. Por favor, inténtalo más tarde.',
+            placeholder: 'Pregunta algo sobre la página…',
+            sendButton: 'Enviar',
+            headerTitle: 'Guía de Ventas IA',
+            headerSubtitle: 'Powered by CtxCommerce',
+        },
+    };
+
+    /**
+     * Resolves the user's preferred UI language from the browser locale.
+     * Falls back to 'en' for unsupported locales.
+     */
+    function resolveLanguage() {
+        const raw = (navigator.language || navigator.userLanguage || 'en').substring(0, 2).toLowerCase();
+        return i18n[raw] ? raw : 'en';
+    }
+
+    // ---- ERROR KEY MAP ----
+    // Backend returns machine-readable keys; the widget maps them to i18n.
+    const ERROR_KEY_MAP = {
+        'error_malicious': 'errorMalicious',
+        'error_out_of_scope': 'errorOutOfScope',
+        'error_processing': 'errorProcessing',
+    };
+
     // ---- UI Component Logic ----
 
     class CtxAIAgent extends HTMLElement {
@@ -84,6 +162,8 @@
             this.API_URL = "http://localhost:8000/api/chat";
             this.isWaitingForResponse = false;
             this.sessionId = this.initSession();
+            this.lang = resolveLanguage();
+            this.t = i18n[this.lang];
         }
 
         connectedCallback() {
@@ -128,16 +208,6 @@
         }
 
         initUI() {
-            // Detect user language to provide a localized greeting
-            const userLang = (navigator.language || navigator.userLanguage || 'en').substring(0, 2).toLowerCase();
-            const greetings = {
-                'en': "Hello! I notice you are looking at our products. How can I assist you today?",
-                'de': "Hallo! Ich sehe, du schaust dir unsere Produkte an. Wie kann ich dir heute helfen?",
-                'fr': "Bonjour ! Je vois que vous regardez nos produits. Comment puis-je vous aider aujourd'hui ?",
-                'es': "¡Hola! Veo que estás mirando nuestros productos. ¿Cómo puedo ayudarte hoy?"
-            };
-            const welcomeMessage = greetings[userLang] || greetings['en'];
-
             // Inject foundational HTML Structure and CSS for the Chat elements into Shadow DOM
             this.shadowRoot.innerHTML = `
                 <link rel="stylesheet" href="/widget/widget.css">
@@ -146,8 +216,8 @@
                     <div class="ctx-chat-window" id="ctx-chat-window">
                         <div class="ctx-chat-header">
                             <div>
-                                <h3 class="ctx-chat-title">AI Sales Guide</h3>
-                                <p class="ctx-chat-subtitle">Powered by CtxCommerce</p>
+                                <h3 class="ctx-chat-title">${this.t.headerTitle}</h3>
+                                <p class="ctx-chat-subtitle">${this.t.headerSubtitle}</p>
                             </div>
                             <button class="ctx-close-btn" id="ctx-close-btn">
                                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -155,12 +225,12 @@
                         </div>
                         <div class="ctx-chat-messages" id="ctx-chat-messages">
                             <div class="ctx-message ctx-message-agent">
-                                ${welcomeMessage}
+                                ${this.t.greeting}
                             </div>
                         </div>
                         <div class="ctx-input-area">
-                            <input type="text" class="ctx-input" id="ctx-chat-input" placeholder="Ask anything about the page..." autocomplete="off">
-                            <button class="ctx-send-btn" id="ctx-send-btn">Send</button>
+                            <input type="text" class="ctx-input" id="ctx-chat-input" placeholder="${this.t.placeholder}" autocomplete="off">
+                            <button class="ctx-send-btn" id="ctx-send-btn">${this.t.sendButton}</button>
                         </div>
                     </div>
 
@@ -213,11 +283,24 @@
 
             // Simple markdown-to-html replacement for bold text and line breaks from the backend
             let formattedText = text.replace(/\\n/g, '<br>');
-            formattedText = formattedText.replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>');
+            formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
             msgDiv.innerHTML = formattedText;
             this.messagesContainer.appendChild(msgDiv);
             this.scrollToBottom();
+        }
+
+        /**
+         * Resolves an agent_reply string. If it matches an error key from
+         * the backend, returns the localized translation. Otherwise returns
+         * the original text unchanged (normal LLM response).
+         */
+        resolveReply(agentReply) {
+            const i18nKey = ERROR_KEY_MAP[agentReply];
+            if (i18nKey && this.t[i18nKey]) {
+                return this.t[i18nKey];
+            }
+            return agentReply;
         }
 
         showLoading() {
@@ -275,19 +358,7 @@
 
                 if (response.status === 422) {
                     this.removeLoading();
-
-                    const userLang = (navigator.language || navigator.userLanguage).split('-')[0].toLowerCase();
-
-                    const refusalMessages = {
-                        'de': 'Ich kann diese Anfrage nicht verarbeiten. Ich bin ein KI-Assistent für Produkte und Navigation in diesem Shop. Wie kann ich heute helfen?',
-                        'en': 'I cannot process this request. I am an AI assistant dedicated to helping you with this store\'s products and navigation. How can I assist you today?',
-                        'fr': 'Je ne peux pas traiter cette demande. Je suis un assistant IA dédié à vous aider avec les produits et la navigation de cette boutique. Comment puis-je vous aider aujourd\'hui?',
-                        'es': 'No puedo procesar esta solicitud. Soy un asistente de IA dedicado a ayudarle con los productos y la navegación de esta tienda. ¿Cómo puedo ayudarle hoy?'
-                    };
-
-                    const replyText = refusalMessages[userLang] || refusalMessages['en'];
-
-                    this.addMessage(replyText, false);
+                    this.addMessage(this.t.refusal, false);
                     return;
                 }
 
@@ -297,13 +368,13 @@
 
                 const data = await response.json();
 
-                // 5. Present the Agent's Reply
+                // 5. Present the Agent's Reply (resolving error keys to i18n)
                 this.removeLoading();
-                this.addMessage(data.agent_reply, false);
+                this.addMessage(this.resolveReply(data.agent_reply), false);
 
                 // 6. Action Execution (Browser Control)
                 if (data.redirect_url) {
-                    this.addMessage(`<i>⚙️ System: Redirecting to product page...</i>`, false);
+                    this.addMessage(`<i>${this.t.redirecting}</i>`, false);
                     setTimeout(() => {
                         // The backend returns a root-relative path via build_url().
                         window.location.href = data.redirect_url;
@@ -314,7 +385,7 @@
                         try {
                             targetEl.click();
                             // Visual feedback
-                            this.addMessage(`<i>⚙️ System: Agent executed an action on the page.</i>`, false);
+                            this.addMessage(`<i>${this.t.actionExecuted}</i>`, false);
                         } catch (e) {
                             console.error(`CtxError: Failed to click element ${data.action_target_id}`, e);
                         }
@@ -326,7 +397,7 @@
             } catch (error) {
                 console.error("CtxError processing chat:", error);
                 this.removeLoading();
-                this.addMessage("I'm sorry, I'm having trouble connecting to the network right now. Please try again later.", false);
+                this.addMessage(this.t.networkError, false);
             } finally {
                 this.isWaitingForResponse = false;
                 this.inputField.focus();
@@ -334,16 +405,22 @@
         }
     }
 
-    // Define the Web Component
-    customElements.define('ctx-ai-agent', CtxAIAgent);
+    // Define the Web Component (guard against duplicate registration during hot-reload)
+    if (!customElements.get('ctx-ai-agent')) {
+        customElements.define('ctx-ai-agent', CtxAIAgent);
+    }
 
     // Embed the widget actively into the layout whenever the document finishes loading.
+    function injectWidget() {
+        if (!document.querySelector('ctx-ai-agent')) {
+            document.body.insertAdjacentHTML('beforeend', '<ctx-ai-agent></ctx-ai-agent>');
+        }
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            document.body.appendChild(document.createElement('ctx-ai-agent'));
-        });
+        document.addEventListener('DOMContentLoaded', injectWidget);
     } else {
-        document.body.appendChild(document.createElement('ctx-ai-agent'));
+        injectWidget();
     }
 
 })();
