@@ -7,6 +7,10 @@ No business logic is altered — only the module boundaries have changed.
 import logging
 from typing import Optional
 
+from google import genai
+from backend.config import LLM_MODEL, GEMINI_API_KEY
+from backend.prompts import PRE_FLIGHT_PROMPT
+
 logger = logging.getLogger(__name__)
 
 
@@ -25,12 +29,6 @@ async def check_malicious_intent(user_message: str) -> bool:
     Returns True if the message is classified as malicious, False otherwise.
     Fails closed (returns True) on errors to prevent bypassing security.
     """
-    # Deferred imports to prevent circular import chains and keep
-    # guardrails.py free of top-level internal dependencies.
-    from google import genai
-    from backend.config import LLM_MODEL, GEMINI_API_KEY
-    from backend.prompts import PRE_FLIGHT_PROMPT
-
     try:
         client = genai.Client(api_key=GEMINI_API_KEY)
         prompt = PRE_FLIGHT_PROMPT.format(user_message=user_message)
