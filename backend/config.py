@@ -14,6 +14,7 @@ load_dotenv()
 # LLM
 # ---------------------------------------------------------------------------
 LLM_MODEL: str = os.getenv("LLM_MODEL")
+PRE_FLIGHT_MODEL: str = os.getenv("PRE_FLIGHT_MODEL", "gemini-2.5-flash-lite")
 GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
 
 # ---------------------------------------------------------------------------
