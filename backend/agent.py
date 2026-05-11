@@ -10,7 +10,8 @@ No business logic lives here — it is delegated to the specialist modules.
 """
 import json
 import logging
-from typing import Optional, Union, Dict, Any, List
+import asyncio
+from typing import Optional, Union, Dict, Any, List, Tuple
 
 from pydantic_ai import Agent
 
@@ -98,7 +99,7 @@ async def process_chat(
     context: Optional[Union[Dict[str, Any], str]] = None,
     session_id: Optional[str] = None,
     redis_client=None,
-) -> ChatResponse:
+) -> Tuple[ChatResponse, List[Dict[str, str]]]:
     """
     Processes a single chat message through the Pydantic AI agent,
     incorporating DOM context and Redis-backed conversation history.
@@ -114,24 +115,29 @@ async def process_chat(
     # --- 1. XML-Tag Sanitization ---
     sanitized_message = _sanitize_tags(message)
 
-    # --- 2. Pre-Flight Security Check ---
-    if await check_malicious_intent(sanitized_message):
+    # --- 2. Concurrent Tasks ---
+    async def _fetch_history():
+        if session_id and redis_client:
+            return await get_chat_history(session_id, redis_client)
+        return []
+
+    history, is_malicious = await asyncio.gather(
+        _fetch_history(),
+        check_malicious_intent(sanitized_message)
+    )
+
+    if is_malicious:
         logger.warning(f"Pre-flight blocked malicious message. Session: {session_id}")
         return ChatResponse(
             agent_reply="error_malicious",
             action_target_id=None,
             redirect_url=None,
-        )
+        ), history
 
     # --- Build prompt ---
     prompt = f"User Message:\n<user_input>{sanitized_message}</user_input>\n"
     if context:
         prompt += f"\nCurrent DOM Context:\n{context}\n"
-
-    # Fetch and sanitize history
-    history: List[Dict[str, str]] = []
-    if session_id and redis_client:
-        history = await get_chat_history(session_id, redis_client)
 
     if history:
         sanitized_history = [
@@ -163,7 +169,7 @@ async def process_chat(
                 agent_reply="error_out_of_scope",
                 action_target_id=None,
                 redirect_url=None,
-            )
+            ), history
 
         # --- Redirect resolution ---
         final_url: Optional[str] = None
@@ -196,13 +202,12 @@ async def process_chat(
             history.append({"role": "agent", "content": result.output.reply})
             if len(history) > 12:
                 history = history[-12:]
-            await save_chat_history(session_id, history, redis_client)
 
         return ChatResponse(
             agent_reply=result.output.reply,
             action_target_id=result.output.action_id,
             redirect_url=final_url,
-        )
+        ), history
 
     except Exception as e:
         logger.error(f"Error during agent execution: {e}")
@@ -210,4 +215,4 @@ async def process_chat(
             agent_reply="error_processing",
             action_target_id=None,
             redirect_url=None,
-        )
+        ), history
