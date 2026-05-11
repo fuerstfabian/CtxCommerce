@@ -165,7 +165,7 @@
             super();
             this.attachShadow({ mode: 'open' });
 
-            this.isOpen = false;
+            this.isOpen = localStorage.getItem('ctx_widget_open') === 'true';
             this.API_URL = "http://localhost:8000/api/chat";
             this.isWaitingForResponse = false;
             this.sessionId = this.initSession();
@@ -177,6 +177,11 @@
             // Wait for element to be attached before actually building the DOM to prevent FOUC / lifecycle bugs
             this.initUI();
             this.attachEventListeners();
+
+            // Restore open/closed state from previous page
+            if (this.isOpen) {
+                this.toggleChat(true);
+            }
         }
 
         initSession() {
@@ -272,6 +277,7 @@
 
         toggleChat(state) {
             this.isOpen = state;
+            localStorage.setItem('ctx_widget_open', String(this.isOpen));
             if (this.isOpen) {
                 this.chatWindow.classList.add('ctx-active');
                 this.inputField.focus();
