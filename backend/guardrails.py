@@ -8,7 +8,7 @@ import logging
 from typing import Optional
 
 from google import genai
-from backend.config import PRE_FLIGHT_MODEL, GEMINI_API_KEY
+from backend.config import LLM_MODEL, GEMINI_API_KEY
 from backend.prompts import PRE_FLIGHT_PROMPT
 
 logger = logging.getLogger(__name__)
@@ -32,9 +32,9 @@ async def check_malicious_intent(user_message: str) -> bool:
     try:
         client = genai.Client(api_key=GEMINI_API_KEY)
         prompt = PRE_FLIGHT_PROMPT.format(user_message=user_message)
-        logger.info(f"Pre-flight classifier running with model: {PRE_FLIGHT_MODEL}")
+        logger.info(f"Pre-flight classifier running with model: {LLM_MODEL}")
         response = await client.aio.models.generate_content(
-            model=PRE_FLIGHT_MODEL,
+            model=LLM_MODEL,
             contents=prompt,
         )
         classification = response.text.strip().upper()

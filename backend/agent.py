@@ -35,7 +35,7 @@ _agent_model = (
 agent = Agent(
     model=_agent_model,
     system_prompt=SYSTEM_PROMPT,
-    output_type=AgentResult,
+    output_type=AgentResult
 )
 
 # Register tool functions defined in tools.py.
