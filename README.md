@@ -1,6 +1,6 @@
 # CtxCommerce
 
-A lightweight, highly decoupled, AI-driven sales agent for e-commerce. Built with hybrid search via Qdrant, a stateful FastAPI backend with Redis-backed memory, Pydantic AI (Gemini), and a domain-agnostic Vanilla JavaScript frontend widget.
+A lightweight, highly decoupled, AI-driven sales agent for e-commerce. Built with vector search via Qdrant (FastEmbed embeddings), a stateful FastAPI backend with Redis-backed memory, Pydantic AI (Gemini), and a domain-agnostic Vanilla JavaScript frontend widget.
 
 ## 🚀 Key Features
 
@@ -12,23 +12,29 @@ A lightweight, highly decoupled, AI-driven sales agent for e-commerce. Built wit
 
 ## 🏗️ Architecture
 
-1.  **Backend (`/backend`)**: FastAPI server implementing structured outputs with Pydantic AI. Handles CORS, Redis connection pooling, and connects to the local Vector DB to execute natural language multi-filtered product searches.
+1.  **Backend (`/backend`)**: FastAPI server implementing structured outputs with Pydantic AI. Handles CORS, Redis connection pooling, and connects to the local Vector DB to execute natural language product searches via vector similarity.
 2.  **Infrastructure (Docker Compose)**: 
-    *   **Qdrant Vector Database**: Stores normalized product metadata (Synthetic PIM Export) and FastEmbed vectors for zero-latency, local context retrieval.
+    *   **Qdrant Vector Database**: Stores normalized product metadata (Synthetic PIM Export) and FastEmbed vectors for local context retrieval.
     *   **Redis**: In-memory ephemeral storage to power the 24h Chat History logic.
+    *   **Backend (optional)**: A containerized FastAPI service, if you prefer running the API via Docker Compose.
 3.  **Frontend Mock (`/storefront`)**: A sterile "Lab" Next.js (App Router, Tailwind CSS, Node 20+) to demonstrate the widget in a modern environment.
 4.  **The Widget (`/frontend/widget.js`)**: The injected UI layer that manages secure `crypto.randomUUID()` session generation, chat flow (including visual history restoration), DOM extraction, and Action execution payloads.
 
 ## ⚙️ Prerequisites
 
-*   **Node.js**: v20 or higher (Required for Next.js 15 Turbopack compilation).
+*   **Node.js**: v20 or higher (recommended for the Next.js dev server).
 *   **Python**: v3.10 or higher.
 *   **Docker**: Required for running the local Qdrant and Redis instances automatically via Compose.
 
 ## 📦 Local Setup & Installation
 
 ### 1. Boot up the Infrastructure
-Open a terminal and start both Qdrant and Redis via the V2 Compose command:
+Open a terminal and start Qdrant + Redis (recommended for local dev):
+```bash
+docker compose up -d qdrant redis
+```
+
+If you want to run the backend in Docker as well:
 ```bash
 docker compose up -d
 ```
@@ -38,7 +44,7 @@ In a new terminal wrapper, initialize your environment:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r backend/requirements.txt
+pip install -r requirements.txt
 ```
 Copy your API keys:
 ```bash
