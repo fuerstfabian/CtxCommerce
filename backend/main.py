@@ -14,7 +14,7 @@ from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 import redis.asyncio as redis
 
-from backend.config import REDIS_URL, ALLOWED_ORIGINS
+from backend.config import REDIS_URL, ALLOWED_ORIGIN
 from backend.models import ChatRequest, ChatResponse
 from backend.agent import process_chat, get_chat_history, save_chat_history
 
@@ -58,7 +58,7 @@ app.mount("/static", StaticFiles(directory=static_dir), name="static")
 # Configure CORS — origin sourced from config.py
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=ALLOWED_ORIGINS,
+    allow_origins=[ALLOWED_ORIGIN] if ALLOWED_ORIGIN else [],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

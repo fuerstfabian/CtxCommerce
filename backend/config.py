@@ -8,31 +8,20 @@ All other backend modules import their configuration exclusively from here.
 import os
 from dotenv import load_dotenv
 import logging
-from typing import List, Union, Any
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from pydantic import field_validator
 
 load_dotenv()
 
 class AppSettings(BaseSettings):
-    # Default is empty list. Using Union prevents pydantic_settings from throwing JSON errors on raw strings
-    allowed_origins: Union[str, List[str]] = []
-    
-    @field_validator("allowed_origins", mode="before")
-    @classmethod
-    def assemble_cors_origins(cls, v: Any) -> List[str]:
-        if isinstance(v, str) and not v.startswith("["):
-            return [i.strip() for i in v.split(",") if i.strip()]
-        return v
+    allowed_origin: str = ""
         
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 settings = AppSettings()
-# Extract the safely validated list
-ALLOWED_ORIGINS: List[str] = settings.allowed_origins
+ALLOWED_ORIGIN: str = settings.allowed_origin
 
-if not ALLOWED_ORIGINS:
-    logging.warning("No ALLOWED_ORIGINS defined in .env. The API will block all cross-origin requests.")
+if not ALLOWED_ORIGIN:
+    logging.warning("No ALLOWED_ORIGIN defined in .env. The API will block all cross-origin requests.")
 
 # ---------------------------------------------------------------------------
 # LLM
