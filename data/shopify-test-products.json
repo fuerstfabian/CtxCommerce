@@ -1,0 +1,971 @@
+{
+    "products": [
+        {
+            "id": 9230434140382,
+            "title": "The Collection Snowboard: Liquid",
+            "handle": "the-collection-snowboard-liquid",
+            "body_html": null,
+            "published_at": "2026-05-30T10:00:06-04:00",
+            "created_at": "2026-05-30T10:00:04-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "Hydrogen Vendor",
+            "product_type": "snowboard",
+            "tags": [
+                "Accessory",
+                "Sport",
+                "Winter"
+            ],
+            "variants": [
+                {
+                    "id": 48292338008286,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "749.95",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 9230434140382,
+                    "created_at": "2026-05-30T10:00:05-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106826974,
+                    "created_at": "2026-05-30T10:00:04-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:06-04:00",
+                    "product_id": 9230434140382,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/Main_b13ad453-477c-4ed1-9b43-81f3345adfd6.jpg?v=1780149606",
+                    "width": 1600,
+                    "height": 1600
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9230434107614,
+            "title": "The Collection Snowboard: Oxygen",
+            "handle": "the-collection-snowboard-oxygen",
+            "body_html": null,
+            "published_at": "2026-05-30T10:00:06-04:00",
+            "created_at": "2026-05-30T10:00:03-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "Hydrogen Vendor",
+            "product_type": "snowboard",
+            "tags": [
+                "Accessory",
+                "Sport",
+                "Winter"
+            ],
+            "variants": [
+                {
+                    "id": 48292337909982,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "1025.00",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 9230434107614,
+                    "created_at": "2026-05-30T10:00:04-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106794206,
+                    "created_at": "2026-05-30T10:00:03-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:05-04:00",
+                    "product_id": 9230434107614,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/Main_d624f226-0a89-4fe1-b333-0d1548b43c06.jpg?v=1780149605",
+                    "width": 1600,
+                    "height": 1600
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9230433911006,
+            "title": "The Collection Snowboard: Hydrogen",
+            "handle": "the-collection-snowboard-hydrogen",
+            "body_html": null,
+            "published_at": "2026-05-30T10:00:06-04:00",
+            "created_at": "2026-05-30T10:00:02-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "Hydrogen Vendor",
+            "product_type": "snowboard",
+            "tags": [
+                "Accessory",
+                "Sport",
+                "Winter"
+            ],
+            "variants": [
+                {
+                    "id": 48292337483998,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "600.00",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 9230433911006,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106466526,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:05-04:00",
+                    "product_id": 9230433911006,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/Main_0a40b01b-5021-48c1-80d1-aa8ab4876d3d.jpg?v=1780149605",
+                    "width": 1600,
+                    "height": 1600
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9230434074846,
+            "title": "The Multi-managed Snowboard",
+            "handle": "the-multi-managed-snowboard",
+            "body_html": null,
+            "published_at": "2026-05-30T10:00:05-04:00",
+            "created_at": "2026-05-30T10:00:03-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "Multi-managed Vendor",
+            "product_type": "snowboard",
+            "tags": [
+                "Premium",
+                "Snow",
+                "Snowboard",
+                "Sport",
+                "Winter"
+            ],
+            "variants": [
+                {
+                    "id": 48292337942750,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": "sku-managed-1",
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "629.95",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 9230434074846,
+                    "created_at": "2026-05-30T10:00:04-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106761438,
+                    "created_at": "2026-05-30T10:00:03-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:05-04:00",
+                    "product_id": 9230434074846,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/Main_9129b69a-0c7b-4f66-b6cf-c4222f18028a.jpg?v=1780149605",
+                    "width": 1600,
+                    "height": 1600
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9230434042078,
+            "title": "The 3p Fulfilled Snowboard",
+            "handle": "the-3p-fulfilled-snowboard",
+            "body_html": null,
+            "published_at": "2026-05-30T10:00:04-04:00",
+            "created_at": "2026-05-30T10:00:03-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "CtxCommerce",
+            "product_type": "snowboard",
+            "tags": [
+                "Accessory",
+                "Sport",
+                "Winter"
+            ],
+            "variants": [
+                {
+                    "id": 48292337877214,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": "sku-hosted-1",
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": false,
+                    "price": "2629.95",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 9230434042078,
+                    "created_at": "2026-05-30T10:00:03-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106728670,
+                    "created_at": "2026-05-30T10:00:03-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:05-04:00",
+                    "product_id": 9230434042078,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/Main_b9e0da7f-db89-4d41-83f0-7f417b02831d.jpg?v=1780149605",
+                    "width": 1600,
+                    "height": 1600
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9230434009310,
+            "title": "The Multi-location Snowboard",
+            "handle": "the-multi-location-snowboard",
+            "body_html": null,
+            "published_at": "2026-05-30T10:00:04-04:00",
+            "created_at": "2026-05-30T10:00:02-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "CtxCommerce",
+            "product_type": "snowboard",
+            "tags": [
+                "Premium",
+                "Snow",
+                "Snowboard",
+                "Sport",
+                "Winter"
+            ],
+            "variants": [
+                {
+                    "id": 48292337811678,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "729.95",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 9230434009310,
+                    "created_at": "2026-05-30T10:00:03-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106695902,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:04-04:00",
+                    "product_id": 9230434009310,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/Main_0a4e9096-021a-4c1e-8750-24b233166a12.jpg?v=1780149604",
+                    "width": 1600,
+                    "height": 1600
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9230433976542,
+            "title": "Selling Plans Ski Wax",
+            "handle": "selling-plans-ski-wax",
+            "body_html": null,
+            "published_at": "2026-05-30T10:00:03-04:00",
+            "created_at": "2026-05-30T10:00:02-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "CtxCommerce",
+            "product_type": "accessories",
+            "tags": [
+                "Accessory",
+                "Sport",
+                "Winter"
+            ],
+            "variants": [
+                {
+                    "id": 48292337254622,
+                    "title": "Selling Plans Ski Wax",
+                    "option1": "Selling Plans Ski Wax",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "24.95",
+                    "grams": 57,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 9230433976542,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                },
+                {
+                    "id": 48292337287390,
+                    "title": "Special Selling Plans Ski Wax",
+                    "option1": "Special Selling Plans Ski Wax",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "49.95",
+                    "grams": 71,
+                    "compare_at_price": null,
+                    "position": 2,
+                    "product_id": 9230433976542,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                },
+                {
+                    "id": 48292337320158,
+                    "title": "Sample Selling Plans Ski Wax",
+                    "option1": "Sample Selling Plans Ski Wax",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "9.95",
+                    "grams": 14,
+                    "compare_at_price": null,
+                    "position": 3,
+                    "product_id": 9230433976542,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106597598,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:05-04:00",
+                    "product_id": 9230433976542,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/snowboard_wax.png?v=1780149605",
+                    "width": 2881,
+                    "height": 2881
+                },
+                {
+                    "id": 47026106630366,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "position": 2,
+                    "updated_at": "2026-05-30T10:00:05-04:00",
+                    "product_id": 9230433976542,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/wax-special.png?v=1780149605",
+                    "width": 2881,
+                    "height": 2881
+                },
+                {
+                    "id": 47026106663134,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "position": 3,
+                    "updated_at": "2026-05-30T10:00:05-04:00",
+                    "product_id": 9230433976542,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/sample-normal-wax.png?v=1780149605",
+                    "width": 2881,
+                    "height": 2881
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Selling Plans Ski Wax",
+                        "Special Selling Plans Ski Wax",
+                        "Sample Selling Plans Ski Wax"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9230433943774,
+            "title": "The Complete Snowboard",
+            "handle": "the-complete-snowboard",
+            "body_html": "This <b>PREMIUM</b> <i>snowboard</i> is so <b>SUPER</b><i>DUPER</i> awesome!",
+            "published_at": "2026-05-30T10:00:03-04:00",
+            "created_at": "2026-05-30T10:00:02-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "Snowboard Vendor",
+            "product_type": "snowboard",
+            "tags": [
+                "Premium",
+                "Snow",
+                "Snowboard",
+                "Sport",
+                "Winter"
+            ],
+            "variants": [
+                {
+                    "id": 48292337582302,
+                    "title": "Ice",
+                    "option1": "Ice",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "699.95",
+                    "grams": 4536,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 9230433943774,
+                    "created_at": "2026-05-30T10:00:03-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                },
+                {
+                    "id": 48292337615070,
+                    "title": "Dawn",
+                    "option1": "Dawn",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "699.95",
+                    "grams": 4536,
+                    "compare_at_price": null,
+                    "position": 2,
+                    "product_id": 9230433943774,
+                    "created_at": "2026-05-30T10:00:03-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                },
+                {
+                    "id": 48292337647838,
+                    "title": "Powder",
+                    "option1": "Powder",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "699.95",
+                    "grams": 4536,
+                    "compare_at_price": null,
+                    "position": 3,
+                    "product_id": 9230433943774,
+                    "created_at": "2026-05-30T10:00:03-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                },
+                {
+                    "id": 48292337680606,
+                    "title": "Electric",
+                    "option1": "Electric",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "699.95",
+                    "grams": 4536,
+                    "compare_at_price": null,
+                    "position": 4,
+                    "product_id": 9230433943774,
+                    "created_at": "2026-05-30T10:00:03-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                },
+                {
+                    "id": 48292337713374,
+                    "title": "Sunset",
+                    "option1": "Sunset",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "699.95",
+                    "grams": 4536,
+                    "compare_at_price": null,
+                    "position": 5,
+                    "product_id": 9230433943774,
+                    "created_at": "2026-05-30T10:00:03-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106564830,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:04-04:00",
+                    "product_id": 9230433943774,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/Main_589fc064-24a2-4236-9eaf-13b2bd35d21d.jpg?v=1780149604",
+                    "width": 1600,
+                    "height": 1600
+                }
+            ],
+            "options": [
+                {
+                    "name": "Color",
+                    "position": 1,
+                    "values": [
+                        "Ice",
+                        "Dawn",
+                        "Powder",
+                        "Electric",
+                        "Sunset"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9230433878238,
+            "title": "The Out of Stock Snowboard",
+            "handle": "the-out-of-stock-snowboard",
+            "body_html": null,
+            "published_at": "2026-05-30T10:00:03-04:00",
+            "created_at": "2026-05-30T10:00:02-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "CtxCommerce",
+            "product_type": "snowboard",
+            "tags": [
+                "Accessory",
+                "Sport",
+                "Winter"
+            ],
+            "variants": [
+                {
+                    "id": 48292337352926,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": false,
+                    "price": "885.95",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 9230433878238,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106532062,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:04-04:00",
+                    "product_id": 9230433878238,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/Main_f44a9605-cd62-464d-b095-d45cdaa0d0d7.jpg?v=1780149604",
+                    "width": 3908,
+                    "height": 3908
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9230433812702,
+            "title": "The Videographer Snowboard",
+            "handle": "the-videographer-snowboard",
+            "body_html": null,
+            "published_at": "2026-05-30T10:00:03-04:00",
+            "created_at": "2026-05-30T10:00:02-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "CtxCommerce",
+            "product_type": "snowboard",
+            "tags": [],
+            "variants": [
+                {
+                    "id": 48292337221854,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "885.95",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 9230433812702,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106400990,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:04-04:00",
+                    "product_id": 9230433812702,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/Main.jpg?v=1780149604",
+                    "width": 1024,
+                    "height": 1024
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9230433747166,
+            "title": "The Compare at Price Snowboard",
+            "handle": "the-compare-at-price-snowboard",
+            "body_html": null,
+            "published_at": "2026-05-30T10:00:03-04:00",
+            "created_at": "2026-05-30T10:00:02-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "CtxCommerce",
+            "product_type": "snowboard",
+            "tags": [
+                "Accessory",
+                "Sport",
+                "Winter"
+            ],
+            "variants": [
+                {
+                    "id": 48292337385694,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "785.95",
+                    "grams": 0,
+                    "compare_at_price": "885.95",
+                    "position": 1,
+                    "product_id": 9230433747166,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106335454,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:05-04:00",
+                    "product_id": 9230433747166,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/snowboard_sky.png?v=1780149605",
+                    "width": 3097,
+                    "height": 3908
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9230433648862,
+            "title": "The Inventory Not Tracked Snowboard",
+            "handle": "the-inventory-not-tracked-snowboard",
+            "body_html": null,
+            "published_at": "2026-05-30T10:00:03-04:00",
+            "created_at": "2026-05-30T10:00:01-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "CtxCommerce",
+            "product_type": "snowboard",
+            "tags": [
+                "Accessory",
+                "Sport",
+                "Winter"
+            ],
+            "variants": [
+                {
+                    "id": 48292337451230,
+                    "title": "Default Title",
+                    "option1": "Default Title",
+                    "option2": null,
+                    "option3": null,
+                    "sku": "sku-untracked-1",
+                    "requires_shipping": true,
+                    "taxable": true,
+                    "featured_image": null,
+                    "available": true,
+                    "price": "949.95",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 9230433648862,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106204382,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:05-04:00",
+                    "product_id": 9230433648862,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/snowboard_purple_hydrogen.png?v=1780149605",
+                    "width": 3097,
+                    "height": 3908
+                }
+            ],
+            "options": [
+                {
+                    "name": "Title",
+                    "position": 1,
+                    "values": [
+                        "Default Title"
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 9230433616094,
+            "title": "Gift Card",
+            "handle": "gift-card",
+            "body_html": "This is a gift card for the store",
+            "published_at": "2026-05-30T10:00:03-04:00",
+            "created_at": "2026-05-30T10:00:01-04:00",
+            "updated_at": "2026-05-30T11:20:18-04:00",
+            "vendor": "Snowboard Vendor",
+            "product_type": "giftcard",
+            "tags": [],
+            "variants": [
+                {
+                    "id": 48292337090782,
+                    "title": "$10",
+                    "option1": "$10",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": false,
+                    "taxable": false,
+                    "featured_image": null,
+                    "available": false,
+                    "price": "10.00",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 1,
+                    "product_id": 9230433616094,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                },
+                {
+                    "id": 48292337123550,
+                    "title": "$25",
+                    "option1": "$25",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": false,
+                    "taxable": false,
+                    "featured_image": null,
+                    "available": false,
+                    "price": "25.00",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 2,
+                    "product_id": 9230433616094,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                },
+                {
+                    "id": 48292337156318,
+                    "title": "$50",
+                    "option1": "$50",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": false,
+                    "taxable": false,
+                    "featured_image": null,
+                    "available": false,
+                    "price": "50.00",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 3,
+                    "product_id": 9230433616094,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                },
+                {
+                    "id": 48292337189086,
+                    "title": "$100",
+                    "option1": "$100",
+                    "option2": null,
+                    "option3": null,
+                    "sku": null,
+                    "requires_shipping": false,
+                    "taxable": false,
+                    "featured_image": null,
+                    "available": false,
+                    "price": "100.00",
+                    "grams": 0,
+                    "compare_at_price": null,
+                    "position": 4,
+                    "product_id": 9230433616094,
+                    "created_at": "2026-05-30T10:00:02-04:00",
+                    "updated_at": "2026-05-30T11:20:18-04:00"
+                }
+            ],
+            "images": [
+                {
+                    "id": 47026106171614,
+                    "created_at": "2026-05-30T10:00:01-04:00",
+                    "position": 1,
+                    "updated_at": "2026-05-30T10:00:05-04:00",
+                    "product_id": 9230433616094,
+                    "variant_ids": [],
+                    "src": "https://cdn.shopify.com/s/files/1/0793/6324/4254/files/gift_card.png?v=1780149605",
+                    "width": 2881,
+                    "height": 2881
+                }
+            ],
+            "options": [
+                {
+                    "name": "Denominations",
+                    "position": 1,
+                    "values": [
+                        "$10",
+                        "$25",
+                        "$50",
+                        "$100"
+                    ]
+                }
+            ]
+        }
+    ]
+}

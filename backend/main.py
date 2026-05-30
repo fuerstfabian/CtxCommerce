@@ -1,18 +1,20 @@
 """
 Main FastAPI application module for CtxCommerce.
 """
+import os
 import logging
 from typing import Dict, Any, Optional
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException, Header, Request, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 import redis.asyncio as redis
 
-from backend.config import REDIS_URL, FRONTEND_URL
+from backend.config import REDIS_URL, ALLOWED_ORIGINS
 from backend.models import ChatRequest, ChatResponse
 from backend.agent import process_chat, get_chat_history, save_chat_history
 
@@ -48,10 +50,15 @@ app = FastAPI(
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
+# Mount static files directory
+# Resolves to the 'static' folder in the root of the project (one level above 'backend')
+static_dir = os.path.join(os.path.dirname(__file__), "..", "static")
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
 # Configure CORS — origin sourced from config.py
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_URL],
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

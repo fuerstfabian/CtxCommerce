@@ -7,8 +7,30 @@ All other backend modules import their configuration exclusively from here.
 """
 import os
 from dotenv import load_dotenv
+import logging
+from typing import List, Union
+from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import field_validator
 
 load_dotenv()
+
+class AppSettings(BaseSettings):
+    # Read as a simple string from .env (prevents JSONDecodeError)
+    # Default is empty string to force explicit configuration
+    allowed_origins: str = ""
+    
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+
+settings = AppSettings()
+# Manually convert the string into a clean list
+ALLOWED_ORIGINS: List[str] = [
+    origin.strip() 
+    for origin in settings.allowed_origins.split(",") 
+    if origin.strip()
+]
+
+if not ALLOWED_ORIGINS:
+    logging.warning("No ALLOWED_ORIGINS defined in .env. The API will block all cross-origin requests.")
 
 # ---------------------------------------------------------------------------
 # LLM
@@ -54,4 +76,3 @@ SHOP_SEARCH_TEMPLATE: str = os.getenv("SHOP_SEARCH_TEMPLATE", "/products?search=
 # Infrastructure
 # ---------------------------------------------------------------------------
 REDIS_URL: str = os.getenv("REDIS_URL", "redis://localhost:6379")
-FRONTEND_URL: str = os.getenv("FRONTEND_URL", "http://localhost:3000")
