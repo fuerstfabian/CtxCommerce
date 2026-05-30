@@ -166,7 +166,9 @@
             this.attachShadow({ mode: 'open' });
 
             this.isOpen = localStorage.getItem('ctx_widget_open') === 'true';
-            this.API_URL = "http://localhost:8000/api/chat";
+            const scriptTag = document.currentScript || document.querySelector('script[src*="widget.js"]');
+            const backendOrigin = scriptTag ? new URL(scriptTag.src).origin : "http://localhost:8000";
+            this.API_URL = `${backendOrigin}/api/chat`;
             this.isWaitingForResponse = false;
             this.sessionId = this.initSession();
             this.lang = resolveLanguage();
@@ -204,7 +206,10 @@
         async restoreHistory() {
             try {
                 const response = await fetch(`${this.API_URL}/history`, {
-                    headers: { 'X-Session-ID': this.sessionId }
+                    headers: { 
+                        'X-Session-ID': this.sessionId,
+                        'ngrok-skip-browser-warning': 'true'
+                    }
                 });
                 if (response.ok) {
                     const data = await response.json();
@@ -222,7 +227,7 @@
         initUI() {
             // Inject foundational HTML Structure and CSS for the Chat elements into Shadow DOM
             this.shadowRoot.innerHTML = `
-                <link rel="stylesheet" href="/widget/widget.css">
+                <link rel="stylesheet" href="${new URL(this.API_URL).origin}/static/widget.css">
                 <div id="ctx-widget-root" class="ctx-widget-container">
                     <!-- Expanded Chat Window -->
                     <div class="ctx-chat-window" id="ctx-chat-window">
@@ -361,7 +366,8 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-Session-ID': this.sessionId
+                        'X-Session-ID': this.sessionId,
+                        'ngrok-skip-browser-warning': 'true'
                     },
                     body: JSON.stringify({
                         user_message: messageStr,

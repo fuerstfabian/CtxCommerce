@@ -51,8 +51,8 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # Mount static files directory
-# Resolves to the 'static' folder in the root of the project (one level above 'backend')
-static_dir = os.path.join(os.path.dirname(__file__), "..", "static")
+# Resolves to the 'frontend' folder in the root of the project (one level above 'backend')
+static_dir = os.path.join(os.path.dirname(__file__), "..", "frontend")
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 # Configure CORS — origin sourced from config.py
