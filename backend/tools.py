@@ -42,9 +42,9 @@ class RedirectAction(BaseModel):
         ...,
         description=(
             "The type of destination: "
-            "'product' for a single product detail page, "
+            "'product' for a single product detail page (only when user explicitly chooses one), "
             "'category' for a category listing page, "
-            "'search' for a search results page, "
+            "'search' for broad exploratory search (NEVER use if query contains price/weight filters), "
             "'system' for any other internal page."
         ),
     )
@@ -94,11 +94,10 @@ class AgentResult(BaseModel):
     redirect_action: Optional[RedirectAction] = Field(
         None,
         description=(
-            "Populate this when the user should be navigated to a new page. "
-            "Use 'product' + the exact identifier slug for product pages, "
-            "'category' + the category slug for listings, "
-            "'search' + the query for search results. "
-            "Leave null if no navigation is required. Must be null if is_in_scope is false."
+            "Populate this ONLY when navigating the user to a new page is absolutely necessary. "
+            "If the user has constraints (price, weight, size), LEAVE THIS NULL and curate products in the chat. "
+            "Use 'product' + identifier slug ONLY when the user explicitly requests to see a specific product. "
+            "Use 'search' ONLY for broad, unconstrained exploration. Must be null if is_in_scope is false."
         ),
     )
 
