@@ -137,6 +137,7 @@ async def process_chat(
     # --- Build prompt ---
     prompt = f"User Message:\n<user_input>{sanitized_message}</user_input>\n"
     if context:
+        logger.info(f"Injecting explicit page context into system prompt: {context}")
         prompt += f"\nCurrent DOM Context:\n{context}\n"
 
     if history:
