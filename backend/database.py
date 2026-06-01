@@ -44,7 +44,11 @@ async def search_products(query: str, min_price: Optional[float] = None, max_pri
     Returns:
         List[Dict[str, Any]]: A list of product dictionaries matching the query (payloads).
     """
-    logger.info(f"Executing vector search for query: '{query}'")
+    logger.info(
+        f"Executing vector search for query: '{query}' "
+        f"(Filters -> min_price: {min_price}, max_price: {max_price}, "
+        f"min_weight: {min_weight}, max_weight: {max_weight})"
+    )
     
     if not qdrant_client or not embedding_model:
         logger.error("Database or Embedding Model is not initialized.")
