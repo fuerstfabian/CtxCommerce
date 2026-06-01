@@ -45,6 +45,9 @@ MAPPING_FIELD_NAME: str = os.getenv("MAPPING_FIELD_NAME", "name")
 MAPPING_FIELD_DESC: str = os.getenv("MAPPING_FIELD_DESC", "description")
 MAPPING_FIELD_PRICE: str = os.getenv("MAPPING_FIELD_PRICE", "price")
 MAPPING_FIELD_ID: str = os.getenv("MAPPING_FIELD_ID", "identifier")
+MAPPING_FIELD_VENDOR: str = os.getenv("MAPPING_FIELD_VENDOR", "vendor")
+MAPPING_FIELD_SKU: str = os.getenv("MAPPING_FIELD_SKU", "sku")
+MAPPING_FIELD_SIZE: str = os.getenv("MAPPING_FIELD_SIZE", "size")
 
 # ---------------------------------------------------------------------------
 # Shop URL Templates

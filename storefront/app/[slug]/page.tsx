@@ -41,9 +41,9 @@ export default async function TrafficControllerPage(props: { params: Params }) {
     let filteredProducts = [];
     if (categoryFilter === 'equipment') {
       const gearFamilies = ['stoves', 'water_filters', 'outdoor_furniture', 'electronics', 'cookware', 'trekking_poles'];
-      filteredProducts = allProducts.filter(p => gearFamilies.includes(p.family));
+      filteredProducts = allProducts.filter(p => gearFamilies.includes(p.family) && !p.parent);
     } else {
-      filteredProducts = allProducts.filter(p => p.family === categoryFilter);
+      filteredProducts = allProducts.filter(p => p.family === categoryFilter && !p.parent);
     }
 
     if (filteredProducts.length === 0) {

@@ -58,12 +58,48 @@ export default function ProductView({ product }: { product: PimProduct }) {
         </div>
 
         <div className="lg:w-1/2 flex flex-col">
+          {product.vendor && (
+            <span className="text-sm font-semibold tracking-wider text-slate-500 uppercase mb-1">
+              {product.vendor}
+            </span>
+          )}
           <h1 className="text-4xl font-extrabold text-slate-900 mb-2">{product.name}</h1>
           <p className="text-3xl font-bold text-blue-600 mb-6">€{product.price.toFixed(2)}</p>
           
-          <div className="prose prose-slate max-w-none mb-10">
+          <div className="prose prose-slate max-w-none mb-8">
             <p className="text-lg leading-relaxed text-slate-600">{product.description}</p>
           </div>
+
+          {product.sku && (
+            <p className="text-sm text-slate-500 mb-8 font-mono">
+              SKU: {product.sku}
+            </p>
+          )}
+
+          {/* Variant Selector */}
+          {product.variants && product.variants.length > 0 && (
+            <div className="mb-10">
+              <h3 className="text-sm font-semibold text-slate-900 mb-3 uppercase tracking-wider">Select Size</h3>
+              <div className="flex gap-3">
+                {product.variants.map((v) => {
+                  const isActive = v.identifier === product.identifier;
+                  return (
+                    <a
+                      key={v.identifier}
+                      href={`/${v.identifier}`}
+                      className={`px-6 py-2 rounded-full border text-sm font-medium transition-colors ${
+                        isActive
+                          ? 'border-emerald-600 bg-emerald-50 text-emerald-700'
+                          : 'border-slate-200 text-slate-700 hover:border-slate-300 hover:bg-slate-50'
+                      }`}
+                    >
+                      {v.size}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {product.specs && Object.keys(product.specs).length > 0 && (
             <div className="mb-10">

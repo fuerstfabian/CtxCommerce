@@ -12,6 +12,11 @@ export interface PimProduct {
   price: number;
   currency: string;
   specs: Record<string, string | number>;
+  vendor?: string;
+  sku?: string;
+  parent?: string;
+  size?: string;
+  variants?: { identifier: string; size: string }[];
 }
 
 export async function getAllProducts(): Promise<PimProduct[]> {
@@ -45,6 +50,10 @@ export async function getAllProducts(): Promise<PimProduct[]> {
       description: item.values.description?.[0]?.data || "",
       price: parseFloat(item.values.price?.[0]?.data?.[0]?.amount || "0"),
       currency: item.values.price?.[0]?.data?.[0]?.currency || "EUR",
+      vendor: item.values.vendor?.[0]?.data,
+      sku: item.values.sku?.[0]?.data,
+      parent: item.parent,
+      size: item.values.size?.[0]?.data,
       specs
     };
   });
@@ -52,5 +61,22 @@ export async function getAllProducts(): Promise<PimProduct[]> {
 
 export async function getProductByIdentifier(identifier: string): Promise<PimProduct | null> {
   const products = await getAllProducts();
-  return products.find(p => p.identifier === identifier) || null;
+  const product = products.find(p => p.identifier === identifier) || null;
+
+  if (product) {
+    if (product.parent) {
+      // Find all sibling variants to build the size selector
+      product.variants = products
+        .filter(p => p.parent === product.parent && p.size)
+        .map(p => ({ identifier: p.identifier, size: p.size! }));
+    } else {
+      // It's a parent model, find its children
+      const children = products.filter(p => p.parent === product.identifier && p.size);
+      if (children.length > 0) {
+        product.variants = children.map(p => ({ identifier: p.identifier, size: p.size! }));
+      }
+    }
+  }
+
+  return product;
 }

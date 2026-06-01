@@ -147,7 +147,14 @@ def build_url(entity_type: str, identifier: str) -> str:
 # Agent Tool Functions
 # ---------------------------------------------------------------------------
 
-async def search_store_products(ctx: RunContext, query: str) -> List[Dict[str, Any]]:
+async def search_store_products(
+    ctx: RunContext, 
+    query: str,
+    min_price: Optional[float] = None,
+    max_price: Optional[float] = None,
+    min_weight: Optional[float] = None,
+    max_weight: Optional[float] = None
+) -> List[Dict[str, Any]]:
     """
     Search for products in the store based on a natural language query.
 
@@ -156,5 +163,9 @@ async def search_store_products(ctx: RunContext, query: str) -> List[Dict[str, A
 
     Args:
         query: The translated, strictly ENGLISH search term.
+        min_price: Optional minimum price in euros.
+        max_price: Optional maximum price in euros.
+        min_weight: Optional minimum weight in grams.
+        max_weight: Optional maximum weight in grams.
     """
-    return await search_products(query)
+    return await search_products(query, min_price, max_price, min_weight, max_weight)

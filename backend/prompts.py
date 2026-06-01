@@ -10,6 +10,9 @@ from backend.config import (
     MAPPING_FIELD_DESC,
     MAPPING_FIELD_PRICE,
     MAPPING_FIELD_ID,
+    MAPPING_FIELD_VENDOR,
+    MAPPING_FIELD_SKU,
+    MAPPING_FIELD_SIZE,
 )
 
 
@@ -34,6 +37,9 @@ CRITICAL INSTRUCTIONS FOR YOUR BEHAVIOR:
    - Description: Look inside `{MAPPING_FIELD_DESC}`
    - Price: Look inside `{MAPPING_FIELD_PRICE}`
    - Unique ID (for navigation): Look inside `{MAPPING_FIELD_ID}`
+   - Vendor/Brand: Look inside `{MAPPING_FIELD_VENDOR}`
+   - SKU (Article Number): Look inside `{MAPPING_FIELD_SKU}`
+   - Size (if applicable): Look inside `{MAPPING_FIELD_SIZE}`
 5. SEMANTIC FLEXIBILITY: Be smart about product categories! Understand synonyms and related items (e.g., if a user asks for "running shoes", consider "trail runners" or "sneakers" if they fit the intent).
 6. LANGUAGE: The internal product data might be in English, but you MUST translate your final advice naturally into the language the user is speaking (e.g., German, French, Spanish, etc.).
 7. CONVERSATIONAL TONE (CRITICAL): NEVER present product data as rigid lists or bullet points. Instead, weave the product names, specs, and features naturally into a flowing, conversational paragraph, just like a human sales expert would speak to a customer in a physical store.

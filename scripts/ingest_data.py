@@ -96,12 +96,40 @@ async def ingest_data() -> None:
         desc_arr = values.get("description", [{"data": ""}])
         description = desc_arr[0].get("data", "") if desc_arr else ""
         
-        # Categories are usually on the root level in this PIM export
         categories = product.get("categories", [])
         category_str = ", ".join(categories)
         
+        vendor_arr = values.get("vendor", [{"data": ""}])
+        vendor = vendor_arr[0].get("data", "") if vendor_arr else ""
+        
+        sku_arr = values.get("sku", [{"data": ""}])
+        sku = sku_arr[0].get("data", "") if sku_arr else ""
+        
+        size_arr = values.get("size", [{"data": ""}])
+        size = size_arr[0].get("data", "") if size_arr else ""
+        
+        # Parse price for Qdrant payload filtering
+        price_arr = values.get("price", [{"data": [{"amount": "0"}]}])
+        price_float = 0.0
+        try:
+            if price_arr and "data" in price_arr[0] and len(price_arr[0]["data"]) > 0:
+                price_float = float(price_arr[0]["data"][0].get("amount", 0))
+        except Exception:
+            pass
+        product["parsed_price"] = price_float
+        
+        # Parse weight for Qdrant payload filtering
+        weight_arr = values.get("weight_grams", [{"data": ""}])
+        weight_float = 0.0
+        try:
+            if weight_arr and weight_arr[0].get("data") is not None:
+                weight_float = float(weight_arr[0].get("data", 0))
+        except Exception:
+            pass
+        product["parsed_weight"] = weight_float
+        
         # Combine contextual fields into one rich textual representation
-        doc_string = f"Name: {name}\nCategories: {category_str}\nDescription: {description}"
+        doc_string = f"Name: {name}\nVendor: {vendor}\nSKU: {sku}\nSize: {size}\nCategories: {category_str}\nDescription: {description}"
         documents_to_embed.append(doc_string)
         
     # Compute vectors
