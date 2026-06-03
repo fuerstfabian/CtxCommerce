@@ -280,7 +280,7 @@
             localStorage.setItem('ctx_widget_open', String(this.isOpen));
             if (this.isOpen) {
                 this.chatWindow.classList.add('ctx-active');
-                this.inputField.focus();
+                this.inputField.focus({ preventScroll: true });
                 // We use setTimeout to allow display block transformation cycle to finish before scrolling
                 setTimeout(() => {
                     this.scrollToBottom();
